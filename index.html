@@ -3321,7 +3321,8 @@
       ];
 
 
-      const handler = PaystackPop.setup({
+      try {
+        const handler = PaystackPop.setup({
         key: 'pk_test_9c5a2052e795fb4da811786934420184a4f7b255',
         email: email || 'customer@thesisgenie.com',
         amount: amount,
@@ -3341,7 +3342,6 @@
 
           btn.innerHTML = '<span>✅ Paid & Submitted! 🎉</span>';
           btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
-          // Show a WhatsApp receipt link below the button
               setTimeout(() => {
             btn.innerHTML = `<span>${origText}</span>`;
             btn.style.background = '';
@@ -3353,7 +3353,15 @@
           btn.disabled = false;
         }
       });
-      handler.openIframe();
+        handler.openIframe();
+      } catch (e) {
+        console.error('Paystack error:', e);
+        btn.innerHTML = '<span>⚠️ Error - Try Again</span>';
+        setTimeout(() => {
+          btn.innerHTML = `<span>${origText}</span>`;
+          btn.disabled = false;
+        }, 4000);
+      }
     }
   </script>
 </body>
