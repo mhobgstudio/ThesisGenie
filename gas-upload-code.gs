@@ -4,17 +4,15 @@
  * 
  * HOW TO DEPLOY:
  * 1. Go to https://script.google.com
- * 2. Click "New project"
- * 3. Delete any default code, paste this entire file
- * 4. Click Deploy → New Deployment
- * 5. Type: Web App
- * 6. Execute as: Me
- * 7. Access: Anyone (this allows your website to upload files)
- * 8. Click Deploy
- * 9. Copy the "Web App URL" (looks like: https://script.google.com/macros/s/.../exec)
- * 10. Paste that URL into your website's GAS_UPLOAD_URL
+ * 2. Open your existing "ThesisGenie Uploader" project
+ * 3. Replace ALL code with this file
+ * 4. Click Deploy → Manage Deployments
+ * 5. Click the existing deployment → Edit pencil icon
+ * 6. Select "New version" under Version
+ * 7. Click Deploy
+ * 8. The URL stays the same! No need to update the website.
  *
- * The folder ID below is your Google Drive folder where files will be saved.
+ * The folder ID below is your Google Drive folder.
  * From your URL: https://drive.google.com/drive/folders/1cXAOV7W4j2tz1nqww2-72ZtB_Tt-X6cA
  * The folder ID is: 1cXAOV7W4j2tz1nqww2-72ZtB_Tt-X6cA
  */
@@ -22,73 +20,78 @@
 const FOLDER_ID = '1cXAOV7W4j2tz1nqww2-72ZtB_Tt-X6cA';
 
 /**
- * Accepts file uploads via POST multipart/form-data
- * Saves the file to the configured Google Drive folder
- * Returns HTML with postMessage to communicate file URL back to the parent page
+ * Accepts file uploads via POST
+ * Supports TWO methods:
+ *   1. Standard multipart/form-data file upload (field: uploadedFile)
+ *   2. Base64-encoded text fields (fields: fileData, fileName, fileType)
  */
 function doPost(e) {
   try {
-    // Allow overriding folder via form field (fallback to default)
     const folderId = (e.parameter && e.parameter.folderId) || FOLDER_ID;
     const folder = DriveApp.getFolderById(folderId);
     
-    // Get uploaded file from form data
-    // When multipart/form-data is used, file inputs become Blobs in e.parameter
+    var file;
+    
+    // METHOD 1: Try multipart file upload first
     const fileBlob = e.parameter.uploadedFile;
-    
-    if (!fileBlob) {
-      return sendResult(false, 'No file received - upload field may be empty');
+    if (fileBlob && typeof fileBlob.getName === 'function') {
+      file = folder.createFile(fileBlob);
+      return sendSuccess(file);
     }
     
-    // Check if it's a real Blob (has getName method)
-    if (typeof fileBlob.getName !== 'function') {
-      return sendResult(false, 'Uploaded data is not a valid file');
+    // METHOD 2: Fallback to base64 text upload (more reliable)
+    const base64Data = e.parameter.fileData;
+    const fileName = e.parameter.fileName || 'uploaded-file';
+    const fileType = e.parameter.fileType || 'application/octet-stream';
+    
+    if (base64Data && base64Data.length > 0) {
+      const decoded = Utilities.base64Decode(base64Data);
+      const blob = Utilities.newBlob(decoded, fileType, fileName);
+      file = folder.createFile(blob);
+      return sendSuccess(file);
     }
     
-    // Create the file in the designated Drive folder
-    const file = folder.createFile(fileBlob);
-    
-    // Return success with file details
-    return sendResult(true, '', {
-      fileUrl: file.getUrl(),
-      fileName: file.getName(),
-      fileId: file.getId()
-    });
+    return sendError('No file received - upload field may be empty');
     
   } catch (error) {
-    return sendResult(false, error.toString());
+    return sendError(error.toString());
   }
 }
 
-/**
- * Sends a result back to the parent window via HTML + postMessage
- */
+function sendSuccess(file) {
+  return sendResult(true, '', {
+    fileUrl: file.getUrl(),
+    fileName: file.getName(),
+    fileId: file.getId()
+  });
+}
+
+function sendError(msg) {
+  return sendResult(false, msg, {});
+}
+
 function sendResult(success, error, data) {
   const result = {
     success: success,
     error: error,
-    fileUrl: data ? data.fileUrl : '',
-    fileName: data ? data.fileName : '',
-    fileId: data ? data.fileId : ''
+    fileUrl: data.fileUrl || '',
+    fileName: data.fileName || '',
+    fileId: data.fileId || ''
   };
   
   const json = JSON.stringify(result);
   
-  // Use \x3c to avoid breaking the HTML parser with </script>
+  // Return HTML with postMessage to communicate back to parent page
   const html = '<script>window.parent.postMessage(' + json + ', "*");\x3c/script>' +
     '<p>Upload complete. You can close this tab.</p>';
   
   return HtmlService.createHtmlOutput(html);
 }
 
-/**
- * Simple GET handler to verify the service is running
- */
 function doGet() {
   return HtmlService.createHtmlOutput(
     '<h2>✓ ThesisGenie File Upload Service</h2>' +
     '<p>Status: <strong style="color:green">Active</strong></p>' +
-    '<p>This endpoint accepts file uploads via POST multipart/form-data.</p>' +
-    '<p>Uploaded files are saved to the configured Google Drive folder.</p>'
+    '<p>Accepts multipart file uploads and base64-encoded uploads.</p>'
   );
 }

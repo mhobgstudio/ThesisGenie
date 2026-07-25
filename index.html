@@ -3229,74 +3229,81 @@
     const DRIVE_FOLDER_ID = '1cXAOV7W4j2tz1nqww2-72ZtB_Tt-X6cA';
 
     /**
-     * Uploads a file to Google Drive via hidden iframe + Google Apps Script
+     * Uploads a file to Google Drive via base64 + hidden iframe
+     * Reads the file as base64, then submits it as a hidden text field
+     * to the Google Apps Script, which decodes and saves to Drive.
      * Returns a promise that resolves with { success, fileUrl, fileName }
      */
     function uploadFileToDrive(file, folderId) {
-      return new Promise((resolve) => {
-        const frameName = 'gas-upload-' + Date.now();
-        let resolved = false;
+      return new Promise(function(resolve) {
+        // Step 1: Read the file as base64
+        var reader = new FileReader();
+        reader.onload = function() {
+          var base64Data = reader.result.split(',')[1]; // Remove data:...;base64, prefix
+          var frameName = 'gas-upload-' + Date.now();
+          var resolved = false;
 
-        // Create hidden iframe
-        const iframe = document.createElement('iframe');
-        iframe.name = frameName;
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+          // Create hidden iframe
+          var iframe = document.createElement('iframe');
+          iframe.name = frameName;
+          iframe.style.display = 'none';
+          document.body.appendChild(iframe);
 
-        // Listen for postMessage from the iframe
-        function msgHandler(event) {
-          if (!resolved && event.data && typeof event.data.success !== 'undefined') {
-            resolved = true;
-            window.removeEventListener('message', msgHandler);
-            document.body.removeChild(iframe);
-            resolve(event.data);
+          // Listen for postMessage from the iframe
+          function msgHandler(event) {
+            if (!resolved && event.data && typeof event.data.success !== 'undefined') {
+              resolved = true;
+              window.removeEventListener('message', msgHandler);
+              document.body.removeChild(iframe);
+              resolve(event.data);
+            }
           }
-        }
-        window.addEventListener('message', msgHandler);
+          window.addEventListener('message', msgHandler);
 
-        // Create temporary form targeting the iframe
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.enctype = 'multipart/form-data';
-        form.target = frameName;
-        form.action = GAS_UPLOAD_URL || 'https://script.google.com/macros/s/REPLACE_ME/exec';
-        form.style.display = 'none';
+          // Create temporary form targeting the iframe (text fields only, no multipart)
+          var form = document.createElement('form');
+          form.method = 'POST';
+          form.target = frameName;
+          form.action = GAS_UPLOAD_URL;
+          form.style.display = 'none';
 
-        // Temporarily move the file input into the upload form
-        const fileInput = document.getElementById('draftFile');
-        const parent = fileInput.parentNode;
-        const placeholder = document.createElement('span');
-        placeholder.style.display = 'none';
-        parent.replaceChild(placeholder, fileInput);
-        // Set name attribute so Google Apps Script can read the file
-        fileInput.name = 'uploadedFile';
-        form.appendChild(fileInput);
+          // Add base64 file data as hidden text field
+          var fields = {
+            fileData: base64Data,
+            fileName: file.name,
+            fileType: file.type || 'application/octet-stream',
+            folderId: folderId || DRIVE_FOLDER_ID
+          };
+          Object.keys(fields).forEach(function(key) {
+            var inp = document.createElement('input');
+            inp.type = 'hidden';
+            inp.name = key;
+            inp.value = fields[key];
+            form.appendChild(inp);
+          });
 
-        // Add folder ID as hidden field
-        const fIdInput = document.createElement('input');
-        fIdInput.type = 'hidden';
-        fIdInput.name = 'folderId';
-        fIdInput.value = folderId || DRIVE_FOLDER_ID;
-        form.appendChild(fIdInput);
+          document.body.appendChild(form);
+          form.submit();
 
-        document.body.appendChild(form);
-        form.submit();
+          // Clean up the form
+          setTimeout(function() {
+            if (form.parentNode) form.parentNode.removeChild(form);
+          }, 500);
 
-        // Move file input back to its original place
-        setTimeout(() => {
-          parent.replaceChild(fileInput, placeholder);
-          document.body.removeChild(form);
-        }, 200);
-
-        // Timeout after 25 seconds
-        setTimeout(() => {
-          if (!resolved) {
-            resolved = true;
-            window.removeEventListener('message', msgHandler);
-            document.body.removeChild(iframe);
-            resolve({ success: false, error: 'Upload timeout' });
-          }
-        }, 25000);
+          // Timeout after 25 seconds
+          setTimeout(function() {
+            if (!resolved) {
+              resolved = true;
+              window.removeEventListener('message', msgHandler);
+              document.body.removeChild(iframe);
+              resolve({ success: false, error: 'Upload timeout' });
+            }
+          }, 25000);
+        };
+        reader.onerror = function() {
+          resolve({ success: false, error: 'Failed to read file' });
+        };
+        reader.readAsDataURL(file);
       });
     }
 
