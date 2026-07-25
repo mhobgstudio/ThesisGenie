@@ -3268,6 +3268,8 @@
         const placeholder = document.createElement('span');
         placeholder.style.display = 'none';
         parent.replaceChild(placeholder, fileInput);
+        // Set name attribute so Google Apps Script can read the file
+        fileInput.name = 'uploadedFile';
         form.appendChild(fileInput);
 
         // Add folder ID as hidden field
