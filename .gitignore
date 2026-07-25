@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Server logs
+*.log
+
+# Temp files
+*.tmp
+*.temp
+
+# Vercel
+.vercel
+
+# Environment
+.env
+.env.local

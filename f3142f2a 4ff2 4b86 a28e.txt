@@ -1,0 +1,326 @@
+
+f3142f2a-4ff2-4b86-a28e-696b51729613.png
+feb31559-97da-46c8-8a2f-33a2e29488ac.png
+b6c975b2-344e-416f-aa7d-17d243a027ec.png
+b0738b33-8d1f-452a-b23b-66d54f59fcda.png
+Create image
+ merge the flyers together for a final image that 48hours to 1 week max express delivery that says GH50 (starter), GH90 (advanced), AND  GH120 (premium) per chapter/section with contact : +233501353546
+
+Generated image: ThesisGenie AI writing services promo
+
+
+Edit
+
+Improve accuracy for documents and research
+Upgrade to Plus and use increased reasoning to synthesize documents, research, files, and complex information.
+
+Get Plus
+
+AI Thesis Writing Service Ad Pricing
+We need to create a Google Form for applicants to get their first paper draft, specifically for those who "don't know how to start." The user wants a form that helps customers who are stuck at the very beginning. The original business was about writing a full thesis, but now the request is for a "first paper draft." Possibly, it's a simplified, entry-level service: "creating your first paper draft if you don't know how to start." I need to craft a Google Form structure that captures the user's topic, what little they might have, and then delivers a draft. The pricing model should reflect that the more they provide, the cheaper it is, but they likely have nothing. However, the prompt says "remake the google form for creating your first paper draft if you dont know how to start." So I'll design a form for someone who has a vague idea or topic and needs a first draft of a paper (maybe an essay, term paper, or thesis chapter). I should incorporate the business's pricing logic: less input from customer = more expensive. But maybe for a "first paper draft," it's a simpler service, but we can still offer tiers. The user might want a form that helps them get started quickly. I'll create a new form that is simpler, focusing on helping them get a draft. I'll retain the Ghana cedi pricing, but since it's a "first draft" it might be cheaper. The form should be shareable on WhatsApp. I'll structure it similarly but adapt it for a first draft. I'll propose tiers based on what they provide. Since they "don't know how to start," they likely have only a topic or an idea. I'll still have tiers: Topic only (most expensive), Topic + some points (mid), and Topic + outline + articles (cheapest). I'll give prices for a standard paper draft (maybe 10-20 pages). I'll include options for humanizing, speed, etc. I'll craft the form with sections and clear descriptions. I'll make it for a "First Paper Draft" service. I'll mention "from just your topic, delivered in days." I'll include a call to action for WhatsApp. I'll output the form structure.
+
+Perfect! Here's a redesigned Google Form tailored specifically for “First Paper Draft” — the service for people who have a topic idea but absolutely no clue how to start writing. Pricing again follows the rule: the less they bring, the more we do (so the higher the price). All prices in Ghana cedis (₵).
+
+📋 Form Title
+First Draft Genie – Your Paper, Started For You
+
+Form Description
+Staring at a blank page? Give us your topic (or what little you have), and we’ll use AI + human polish to deliver a complete first draft of your paper. Zero stress. Just fill this, and we'll start immediately. You’ll get a final quote before we begin.
+
+🔹 SECTION 1: YOUR DETAILS
+Full Name
+Short answer | Required ✅
+
+Email Address
+Short answer | Required ✅
+
+WhatsApp Number (e.g., +233 24 XXX XXXX)
+Short answer | Required ✅
+Hint: We’ll send your draft and quote here.
+
+🔹 SECTION 2: WHAT ARE YOU STUDYING?
+Academic Level
+Multiple choice
+
+High School (SHS)
+
+Undergraduate
+
+Master’s
+
+PhD
+
+Professional / Other
+Required ✅
+
+Type of Paper
+Multiple choice
+
+Essay
+
+Research Paper
+
+Term Paper / Coursework
+
+Thesis Chapter (specify in notes)
+
+Proposal
+
+Other
+Required ✅
+
+🔹 SECTION 3: WHAT DO YOU HAVE? (PICK ONE)
+Your choice here determines the base price. The less you give us, the more of the work we do, so the price goes up.
+
+Choose your starting point
+Multiple choice
+
+💎 Idea only – I have just a rough topic or subject area. (Full-Service: we research, structure, and write everything)
+
+📄 Idea + a few points – I know the topic and have some bullet points, sources, or key arguments.
+
+📚 Idea + materials – I have a clear outline, specific articles, or notes. (Guided: you’ve done some groundwork)
+Required ✅
+
+🔹 SECTION 4: TELL US YOUR IDEA
+Your topic / subject / research question
+Paragraph | Required ✅
+Hint: Write exactly what you’d tell a friend. Example: “The impact of mobile money on small businesses in Accra.”
+
+Any specific instructions, keywords, or angles you want us to include?
+Paragraph | Optional
+Example: “Focus on women-owned businesses, include statistics from Ghana, mention MTN MoMo.”
+
+🔹 SECTION 5: UPLOAD WHAT YOU HAVE (IF ANY)
+Only appears based on question 6. Use “Go to section based on answer” in Google Forms.
+
+If “Idea only” → Skip uploads.
+
+If “Idea + a few points” → Show this section:
+
+Upload your bullet points / notes / sources (optional)
+File upload | PDF, Word, plain text
+Max files: 5
+If “Idea + materials” → Show this section:
+
+Upload your outline, draft, or detailed notes
+File upload | Required ✅
+Upload articles, references, or sources
+File upload | Optional
+🔹 SECTION 6: EXTRAS TO MAKE YOUR DRAFT EVEN BETTER
+Add-on services (tick all you want)
+Checkboxes | Optional
+
+✨ Humanizing (AI detection-proof) – from +₵40
+
+🔍 Plagiarism report – +₵20
+
+📊 Data / chart analysis – +₵80
+
+📑 Specific citation style (APA, MLA, Harvard, etc.) – +₵15
+
+🔄 Extra revision round – +₵15 each
+
+📄 Convert to your school template – +₵30
+
+🔹 SECTION 7: WHEN DO YOU NEED IT?
+Delivery speed
+Multiple choice
+
+Standard (3–5 days) – included in base price
+
+Fast (48 hours) – +₵40
+
+Super Express (24 hours) – +₵70 (max 20 pages)
+Required ✅
+
+Approximate length you expect
+Multiple choice
+
+5–10 pages
+
+10–20 pages
+
+20–30 pages
+
+Not sure (we’ll recommend)
+Required ✅
+
+🔹 SECTION 8: ANYTHING ELSE?
+Special notes / requests
+Paragraph | Optional
+
+How did you hear about us?
+Multiple choice | Optional
+
+WhatsApp group / status
+
+Friend
+
+Instagram / TikTok
+
+Other
+
+💰 PRICING GUIDE (auto‑calculated mentally, but you can include it in the confirmation message)
+Starting point	Base Price (for 10-15 pages, 3-5 days)
+💎 Idea only	₵149
+📄 Idea + points	₵89
+📚 Idea + materials	₵49
+Prices scale with page count and add‑ons. Final quote sent to your WhatsApp within 30 minutes.
+
+✅ Confirmation Message
+text
+Thank you! 🙌
+
+We’ll check everything you’ve sent and WhatsApp you a final price within 30 minutes. No payment is needed until you approve the quote.
+
+In the meantime, save our number: +233 XX XXX XXXX 📲
+
+Your first draft is closer than you think. 🎓
+This form turns total confusion into a clear next step — perfect for the “I don’t know where to start” crowd. Want me to prepare the short WhatsApp caption to send alongside the form link?
+
+make a whatsapp message link for requesting thesis service from +233501353546
+We need to create a WhatsApp message link for requesting thesis service from the phone number +233501353546.
+
+The user wants a WhatsApp message link, likely a pre-filled message that a customer can click to start a chat with that number. The number is in Ghana, +233 50 135 3546 (or 501353546). I need to format it correctly.
+
+A WhatsApp link is: https://wa.me/<phone_number>?text=<url-encoded message>
+
+Phone number should be in international format without any '+' or leading zeros. So +233501353546 becomes 233501353546.
+
+I need to craft a default message. The context: they want a link for "requesting thesis service". The previous messages were about creating a Google Form and a flyer for a thesis writing service. So the link should open a WhatsApp chat with that number, with a pre-filled message saying something like "Hi, I'm interested in your thesis writing service. Can you help me?" or similar. I'll craft a brief, clear message.
+
+I'll provide the WhatsApp link, possibly with a short explanation. The user asked "make a whatsapp message link for requesting thesis service from +233501353546". So I'll respond with the link, maybe a clickable version, and a short note.
+
+Make sure the number is correct: +233 50 135 3546? The given string is "+233501353546". That's 12 digits after the country code? Typically Ghana numbers: +233 then 9 digits (starting with 2, 5, etc.). 501353546 is 9 digits, so total is 12 digits (233 + 9), correct.
+
+I'll produce the link: https://wa.me/233501353546?text=Hi%2C%20I%27m%20interested%20in%20your%20thesis%20writing%20service.%20Can%20you%20help%20me%3F
+
+But the user might want a more tailored message with the service name "ThesisGenie" from earlier. Since the context is about ThesisGenie, I'll include that. I'll say: "Hi ThesisGenie! I need help with my thesis. Can you assist me?" I'll encode it.
+
+I'll output the link, maybe with a WhatsApp button emoji, and a ready-to-share format.
+
+Here's your click-to-chat WhatsApp link, pre-filled with a message for your thesis service:
+
+👉 Tap to message us directly:
+
+text
+https://wa.me/233501353546?text=Hi%20ThesisGenie!%20I%20need%20help%20with%20my%20thesis.%20Can%20you%20assist%20me%3F
+How to use it:
+
+When someone taps the link, it opens WhatsApp with the number +233 50 135 3546 and the message "Hi ThesisGenie! I need help with my thesis. Can you assist me?" already typed.
+
+You can share this link anywhere – Instagram bio, flyer, WhatsApp status, or under that Google Form confirmation message.
+
+Want a shorter, prettier version?
+Use this as a clickable button text:
+📲 Chat on WhatsApp with the link above behind it.
+
+If you need the message to say something different (e.g., "I want the first draft service" or "I have a topic, send me a quote"), just tell me and I'll remake the link instantly.
+
+
+
+
+
+
+
+Screen reader support enabled.
+Untitled form
+
+Section 1 of 8
+First Draft Genie – Your Paper, Started For You
+Staring at a blank page? Give us your topic (or what little you have), and we’ll use AI + human polish to deliver a complete first draft of your paper. Zero stress. Just fill this, and we'll start immediately. You’ll get a final quote before we begin.
+YOUR DETAILS
+*
+Full Name
+Email Address
+WhatsApp Number
+After section 1
+Section 2 of 8
+WHAT ARE YOU STUDYING?
+Description (optional)
+
+Academic Level
+*
+Undergraduate
+Master’s
+PhD
+Professional
+Other:
+Type of Paper
+*
+Research Paper
+Thesis Chapter (specify in notes)
+Other:
+After section 2
+Section 3 of 8
+WHAT DO YOU HAVE? (PICK ONE)
+Your choice here determines the base price. The less you give us, the more of the work we do, so the price goes up.
+Choose your starting point
+*
+💎 Idea only – I have just a rough topic or subject area. (Full-Service: we research, structure, and write everything)
+📄 Idea + a few points – I know the topic and have some bullet points, sources, or key arguments.
+📚 Idea + materials – I have a clear outline, specific articles, or notes. (Guided: you’ve done some groundwork)
+Other:
+After section 3
+Section 4 of 8
+SECTION 4: TELL US YOUR IDEA
+Description (optional)
+
+Your topic / subject / research question
+Hint: Write exactly what you’d tell a friend. Example: “The impact of mobile money on small businesses in Accra.”
+*
+Any specific instructions, keywords, or angles you want us to include?
+Example: “Focus on women-owned businesses, include statistics from Ghana, mention MTN MoMo.”
+*
+After section 4
+Section 5 of 8
+ SECTION 5: UPLOAD WHAT YOU HAVE (IF ANY)
+Only appears based on question 6. Use “Go to section based on answer” in Google Forms.
+Question
+
+After section 5
+Section 6 of 8
+SECTION 6: EXTRAS TO MAKE YOUR DRAFT EVEN BETTER
+Description (optional)
+
+Add-on services (tick all you want)
+
+✨ Humanizing (AI detection-proof) – from +₵150
+📊 Data / chart analysis Diagrams – +₵ 280
+📑 Specific citation style (APA, MLA, Harvard, etc.) – +₵15
+🔄 Extra revision round – +₵50 each
+📄 Convert to your provided school template – +₵30
+After section 6
+Section 7 of 8
+SECTION 7: WHEN DO YOU NEED IT?
+Description (optional)
+
+Delivery speed
+*
+Standard (20–30 days) – included in base price
+Fast (7–15 days) – +₵140
+Super Express (under a week) – +₵250 (max 20 pages)
+Approximate length you expect
+*
+5–10 pages
+0–20 pages
+20–30 pages
+40–60 pages
+65–100 pages
+Other:
+After section 7
+Section 8 of 8
+SECTION 8: ANYTHING ELSE?
+Description (optional)
+
+Special notes / requests
+How did you hear about us?
+WhatsApp group / status
+Friend
+Instagram / TikTok
+Other:
+
+.
+Banner hidden 
+
