@@ -11,7 +11,6 @@ A premium static landing page for an academic writing service, featuring 3D visu
 - **Paystack Payments** — Secure payment popup with tiered pricing (₵49 / ₵89 / ₵149)
 - **Google Forms Integration** — Auto-submits orders to your Google Sheet
 - **Email Notifications** — New paid orders sent to your inbox via FormSubmit
-- **WhatsApp Receipt** — Clickable payment receipt link for customers
 - **Smooth Animations** — Scroll-triggered reveals, gradient borders, shimmer effects
 
 ## 🚀 Quick Deploy
@@ -75,13 +74,11 @@ Payment success
        ↓
 ├── Google Forms (your sheet) ✅
 ├── Email to zampacto15@gmail.com ✅
-└── WhatsApp receipt link (user clicks) ✅
 ```
 
 ## 🔧 Customization
 
 - **Pricing**: Edit `tierPricing` and `tierLabels` in `handleDraftForm()`
-- **WhatsApp number**: Update the `wa.me/233501353546` links
 - **Google Form fields**: Update the `entry.xxxxx` IDs in `handleDraftForm()`
 - **Email recipient**: Update the FormSubmit URL in `sendEmailNotification()`
 - **Colors**: Edit the `:root` CSS variables
