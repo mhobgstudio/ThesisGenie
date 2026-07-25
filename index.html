@@ -3112,7 +3112,7 @@
     if (heroStats.length) statsObserver.observe(heroStats[0].closest('.hero-stats'));
 
     // ---- Send order notification email to admin ----
-    function sendEmailNotification(formData, paymentRef, isLead) {
+    function sendEmailNotification(formData, paymentRef) {
       const emailUrl = 'https://formsubmit.co/zampacto15@gmail.com';
       const emFrame = document.createElement('iframe');
       emFrame.name = 'em-submit-' + Date.now();
@@ -3124,10 +3124,9 @@
       emForm.target = emFrame.name;
       emForm.acceptCharset = 'UTF-8';
       // Hidden fields for FormSubmit
-      const subject = isLead ? '🆕 NEW FORM SUBMISSION - ThesisGenie' : '🆕 NEW PAID ORDER - ThesisGenie';
       const hiddenFields = {
         _captcha: 'false',
-        _subject: subject,
+        _subject: '🆕 NEW PAID ORDER - ThesisGenie',
         _template: 'table'
       };
       Object.entries(hiddenFields).forEach(([k, v]) => {
@@ -3272,7 +3271,7 @@
         callback: function(response) {
           // Payment successful — submit to Google Form & email notification
           submitToGoogleForm(gfData);
-          sendEmailNotification(gfData, response.reference, false);
+          sendEmailNotification(gfData, response.reference);
 
           btn.innerHTML = '<span>✅ Paid & Submitted! 🎉</span>';
           btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
