@@ -949,6 +949,48 @@
     .form-field select { color: var(--text); }
     .form-field select option { background: var(--space-dark); color: var(--text); }
     .form-field textarea { resize: vertical; min-height: 70px; }
+    .form-field input[type="file"] { display: none; }
+    .file-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .file-input-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(212, 168, 67, 0.08);
+      border: 1px solid rgba(212, 168, 67, 0.15);
+      border-radius: 10px;
+      color: var(--gold-light);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .file-input-label:hover {
+      background: rgba(212, 168, 67, 0.14);
+      border-color: rgba(212, 168, 67, 0.25);
+      box-shadow: 0 0 16px rgba(212, 168, 67, 0.08);
+    }
+    .file-name {
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      font-weight: 400;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .form-hint {
+      margin-top: 4px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 400;
+      opacity: 0.7;
+    }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
     /* ===== ADD-ONS ===== */
@@ -1754,6 +1796,25 @@
               <label for="draftInstructions">Additional Instructions (optional)</label>
               <textarea id="draftInstructions" placeholder="Focus on women-owned businesses, include Ghanaian statistics, mention MTN MoMo..."></textarea>
             </div>
+            <div class="form-field">
+              <label for="draftFile">Upload Materials (optional)</label>
+              <div class="file-input-wrapper">
+                <input type="file" id="draftFile" accept=".pdf,.doc,.docx,.txt,.md,.zip" />
+                <label for="draftFile" class="file-input-label">📎 Choose Files</label>
+                <span class="file-name" id="fileDisplay">No file chosen</span>
+              </div>
+              <p class="form-hint">Attach outlines, articles, or references (PDF, DOC, TXT, ZIP)</p>
+            </div>
+            <script>
+              document.getElementById('draftFile').addEventListener('change', function(e) {
+                const display = document.getElementById('fileDisplay');
+                if (display) {
+                  display.textContent = e.target.files.length > 0
+                    ? '📎 ' + e.target.files[0].name
+                    : 'No file chosen';
+                }
+              });
+            </script>
             <button type="submit" id="draftSubmitBtn" class="btn btn-primary" style="width:100%;justify-content:center;">
               <span>🚀 Get Free Quote</span>
             </button>
@@ -3218,6 +3279,10 @@
       const startingPoint = document.getElementById('draftStartingPoint').value;
       const topic = document.getElementById('draftTopic').value.trim();
       const instructions = document.getElementById('draftInstructions').value.trim();
+      const fileInput = document.getElementById('draftFile');
+      const fileName = fileInput && fileInput.files.length > 0
+        ? fileInput.files[0].name
+        : '';
 
       // Pricing in GHS (kobo = pesewas x 100 for Paystack)
       const tierPricing = {
@@ -3251,6 +3316,7 @@
         ['entry.1998574391', paperType],
         ['entry.1477751146', topic],
         ['entry.1248919153', instructions],
+        ['entry.1410609520', fileName],
         ['entry.901327658', gfTierMap[startingPoint] || startingPoint]
       ];
 
