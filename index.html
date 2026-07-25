@@ -3223,6 +3223,81 @@
       }, 3000);
     }
 
+    // ===== GOOGLE DRIVE FILE UPLOAD (via Google Apps Script) =====
+    // After deploying the Google Apps Script, paste the Web App URL here:
+    const GAS_UPLOAD_URL = ''; // <-- PASTE YOUR WEB APP URL HERE
+    const DRIVE_FOLDER_ID = '1cXAOV7W4j2tz1nqww2-72ZtB_Tt-X6cA';
+
+    /**
+     * Uploads a file to Google Drive via hidden iframe + Google Apps Script
+     * Returns a promise that resolves with { success, fileUrl, fileName }
+     */
+    function uploadFileToDrive(file, folderId) {
+      return new Promise((resolve) => {
+        const frameName = 'gas-upload-' + Date.now();
+        let resolved = false;
+
+        // Create hidden iframe
+        const iframe = document.createElement('iframe');
+        iframe.name = frameName;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Listen for postMessage from the iframe
+        function msgHandler(event) {
+          if (!resolved && event.data && typeof event.data.success !== 'undefined') {
+            resolved = true;
+            window.removeEventListener('message', msgHandler);
+            document.body.removeChild(iframe);
+            resolve(event.data);
+          }
+        }
+        window.addEventListener('message', msgHandler);
+
+        // Create temporary form targeting the iframe
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.enctype = 'multipart/form-data';
+        form.target = frameName;
+        form.action = GAS_UPLOAD_URL || 'https://script.google.com/macros/s/REPLACE_ME/exec';
+        form.style.display = 'none';
+
+        // Temporarily move the file input into the upload form
+        const fileInput = document.getElementById('draftFile');
+        const parent = fileInput.parentNode;
+        const placeholder = document.createElement('span');
+        placeholder.style.display = 'none';
+        parent.replaceChild(placeholder, fileInput);
+        form.appendChild(fileInput);
+
+        // Add folder ID as hidden field
+        const fIdInput = document.createElement('input');
+        fIdInput.type = 'hidden';
+        fIdInput.name = 'folderId';
+        fIdInput.value = folderId || DRIVE_FOLDER_ID;
+        form.appendChild(fIdInput);
+
+        document.body.appendChild(form);
+        form.submit();
+
+        // Move file input back to its original place
+        setTimeout(() => {
+          parent.replaceChild(fileInput, placeholder);
+          document.body.removeChild(form);
+        }, 200);
+
+        // Timeout after 25 seconds
+        setTimeout(() => {
+          if (!resolved) {
+            resolved = true;
+            window.removeEventListener('message', msgHandler);
+            document.body.removeChild(iframe);
+            resolve({ success: false, error: 'Upload timeout' });
+          }
+        }, 25000);
+      });
+    }
+
     function submitToGoogleForm(formData, cb) {
       const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdVtBfUuls2h45i3c3J2zusm-tRs6RdlTZgLtsNlsq2FeW2Wg/formResponse';
       const gfFrame = document.createElement('iframe');
@@ -3304,63 +3379,87 @@
       const amount = tierPricing[startingPoint] || 14900;
       const ref = 'TG-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
 
-      btn.innerHTML = '<span>⏳ Opening Payment...</span>';
-      btn.disabled = true;
+      // Function to start Paystack payment (called after optional file upload)
+      function startPayment(uploadedFileUrl) {
+        btn.innerHTML = '<span>⏳ Opening Payment...</span>';
+        btn.disabled = true;
 
-      // Build Google Form data once (shared between success paths)
-      const gfData = [
-        ['entry.1308445882', name],
-        ['entry.783962777', phone],
-        ['entry.723763420', email],
-        ['entry.189685575', level],
-        ['entry.1998574391', paperType],
-        ['entry.1477751146', topic],
-        ['entry.1248919153', instructions],
-        ['entry.1410609520', fileName],
-        ['entry.901327658', gfTierMap[startingPoint] || startingPoint]
-      ];
+        // Build Google Form data once (shared between success paths)
+        const gfData = [
+          ['entry.1308445882', name],
+          ['entry.783962777', phone],
+          ['entry.723763420', email],
+          ['entry.189685575', level],
+          ['entry.1998574391', paperType],
+          ['entry.1477751146', topic],
+          ['entry.1248919153', instructions],
+          ['entry.1410609520', fileName],
+          ['entry.901327658', gfTierMap[startingPoint] || startingPoint],
+          ['entry.86836823', uploadedFileUrl || '']
+        ];
 
+        try {
+          const handler = PaystackPop.setup({
+          key: 'pk_test_9c5a2052e795fb4da811786934420184a4f7b255',
+          email: email || 'customer@thesisgenie.com',
+          amount: amount,
+          currency: 'GHS',
+          ref: ref,
+          metadata: {
+            custom_fields: [
+              { display_name: 'Name', variable_name: 'name', value: name },
+              { display_name: 'WhatsApp', variable_name: 'phone', value: phone },
+              { display_name: 'Topic', variable_name: 'topic', value: topic }
+            ]
+          },
+          callback: function(response) {
+            // Payment successful — submit to Google Form & email notification
+            submitToGoogleForm(gfData);
+            sendEmailNotification(gfData, response.reference);
 
-      try {
-        const handler = PaystackPop.setup({
-        key: 'pk_test_9c5a2052e795fb4da811786934420184a4f7b255',
-        email: email || 'customer@thesisgenie.com',
-        amount: amount,
-        currency: 'GHS',
-        ref: ref,
-        metadata: {
-          custom_fields: [
-            { display_name: 'Name', variable_name: 'name', value: name },
-            { display_name: 'WhatsApp', variable_name: 'phone', value: phone },
-            { display_name: 'Topic', variable_name: 'topic', value: topic }
-          ]
-        },
-        callback: function(response) {
-          // Payment successful — submit to Google Form & email notification
-          submitToGoogleForm(gfData);
-          sendEmailNotification(gfData, response.reference);
-
-          btn.innerHTML = '<span>✅ Paid & Submitted! 🎉</span>';
-          btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
-              setTimeout(() => {
+            btn.innerHTML = '<span>✅ Paid & Submitted! 🎉</span>';
+            btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+                setTimeout(() => {
+              btn.innerHTML = `<span>${origText}</span>`;
+              btn.style.background = '';
+              btn.disabled = false;
+            }, 10000);
+          },
+          onClose: function() {
             btn.innerHTML = `<span>${origText}</span>`;
-            btn.style.background = '';
             btn.disabled = false;
-          }, 10000);
-        },
-        onClose: function() {
-          btn.innerHTML = `<span>${origText}</span>`;
-          btn.disabled = false;
+          }
+        });
+          handler.openIframe();
+        } catch (e) {
+          console.error('Paystack error:', e);
+          btn.innerHTML = '<span>⚠️ Error - Try Again</span>';
+          setTimeout(() => {
+            btn.innerHTML = `<span>${origText}</span>`;
+            btn.disabled = false;
+          }, 4000);
         }
-      });
-        handler.openIframe();
-      } catch (e) {
-        console.error('Paystack error:', e);
-        btn.innerHTML = '<span>⚠️ Error - Try Again</span>';
-        setTimeout(() => {
-          btn.innerHTML = `<span>${origText}</span>`;
-          btn.disabled = false;
-        }, 4000);
+      }
+
+      // If a file is selected and GAS upload is configured, upload first
+      if (fileInput && fileInput.files.length > 0 && GAS_UPLOAD_URL) {
+        btn.innerHTML = '<span>⏳ Uploading Materials...</span>';
+        btn.disabled = true;
+
+        uploadFileToDrive(fileInput.files[0], DRIVE_FOLDER_ID)
+          .then(function(result) {
+            if (result && result.success) {
+              startPayment(result.fileUrl || '');
+            } else {
+              // Upload failed — proceed without file
+              startPayment('');
+            }
+          })
+          .catch(function() {
+            startPayment('');
+          });
+      } else {
+        startPayment('');
       }
     }
   </script>
