@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KnowHow — Learn How to Do Anything</title>
   <meta name="description" content="Master new skills with bite-sized video lessons. From AI tools to coding — buy individual lessons or unlock full courses. Learn at your own pace." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
@@ -229,6 +229,36 @@
       .hero-actions { flex-direction: column; align-items: stretch; }
       .btn { justify-content: center; width: 100%; }
     }
+  
+/* PAYMENT MODAL */
+.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:10000;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease}
+.pay-overlay.active{display:flex;opacity:1}
+.pay-modal{background:var(--space-mid,#0E0E1E);border:1px solid var(--glass-border);border-radius:var(--radius);padding:40px;max-width:440px;width:90%;position:relative;transform:scale(0.9);transition:transform 0.3s ease}
+.pay-overlay.active .pay-modal{transform:scale(1)}
+.pay-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:24px;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.pay-close:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.pay-modal h3{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:8px}
+.pay-modal .pay-desc{color:var(--text-dim);font-size:0.9rem;margin-bottom:24px}
+.pay-modal .pay-lesson-name{background:rgba(212,168,67,0.06);border:1px solid rgba(212,168,67,0.12);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}
+.pay-modal .pay-lesson-name strong{color:var(--gold-light);font-size:0.95rem}
+.pay-modal .pay-lesson-name .pay-cat{font-size:0.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.pay-field{margin-bottom:16px}
+.pay-field label{display:block;font-size:0.72rem;font-weight:600;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.pay-field input,.pay-field select{width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.88rem;transition:var(--transition)}
+.pay-field input:focus,.pay-field select:focus{outline:none;border-color:rgba(212,168,67,0.3);box-shadow:0 0 20px rgba(212,168,67,0.05)}
+.pay-field input::placeholder{color:rgba(240,232,216,0.3)}
+.pay-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1px solid rgba(212,168,67,0.08);margin-top:8px;margin-bottom:20px}
+.pay-total .pay-label{color:var(--text-dim);font-size:0.9rem}
+.pay-total .pay-amount{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pay-btn{width:100%;padding:14px;border:none;border-radius:50px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:var(--transition);font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--gold),#C49A35);color:var(--space-dark);box-shadow:0 4px 24px rgba(212,168,67,0.25)}
+.pay-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,67,0.4)}
+.pay-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
+.pay-test-badge{display:inline-block;background:rgba(212,168,67,0.08);border:1px solid rgba(212,168,67,0.12);color:var(--gold-light);padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;margin-bottom:16px}
+.pay-success{text-align:center;padding:20px 0}
+.pay-success .check{font-size:3rem;margin-bottom:12px}
+.pay-success h4{font-size:1.2rem;margin-bottom:8px}
+.pay-success p{color:var(--text-dim);font-size:0.9rem}
+
   </style>
 </head>
 <body>
@@ -237,7 +267,7 @@
 
   <nav class="navbar" id="navbar">
     <div class="container">
-      <a href="#" class="logo"><span class="logo-icon">🎓</span>Know<span>How</span></a>
+      <a href="#" class="logo"><span class="logo-icon">📖</span>Know<span>How</span></a>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -280,7 +310,7 @@
               <li>Lifetime access once purchased</li>
               <li>30-day money-back guarantee</li>
             </ul>
-            <a href="lessons/ai-research-assistant.html" class="btn btn-primary" style="width:100%;justify-content:center;"><span>Start Learning →</span></a>
+            <a href="javascript:void(0)" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="openPayment('AI Research Assistant','AI Research',25)"><span>Buy — ₵25 →</span></a>
           </div>
         </div>
       </div>
@@ -296,7 +326,7 @@
         <p class="section-sub">From AI research tools to coding — find lessons that match your needs as a graduate student.</p>
       </div>
       <div class="categories-grid">
-        <a href="#lessons" class="category-card reveal" style="transition-delay:0.05s"><span class="category-icon">🎓</span><h3>KNUST Tools</h3><p>TDMS, Outlook, Student Pack</p><span class="category-count">3 lessons</span></a>
+        <a href="#lessons" class="category-card reveal" style="transition-delay:0.05s"><span class="category-icon">📖</span><h3>KNUST Tools</h3><p>TDMS, Outlook, Student Pack</p><span class="category-count">3 lessons</span></a>
         <a href="#lessons" class="category-card reveal" style="transition-delay:0.1s"><span class="category-icon">🔬</span><h3>AI Research</h3><p>Literature reviews, notes, tools</p><span class="category-count">4 lessons</span></a>
         <a href="#lessons" class="category-card reveal" style="transition-delay:0.15s"><span class="category-icon">✍️</span><h3>AI Writing</h3><p>Detection, bypass, academic prose</p><span class="category-count">2 lessons</span></a>
         <a href="#lessons" class="category-card reveal" style="transition-delay:0.2s"><span class="category-icon">💻</span><h3>Developer Tools</h3><p>Code editors, terminal AI</p><span class="category-count">3 lessons</span></a>
@@ -357,7 +387,7 @@
           <div class="pricing-amount">₵15 <span>/ lesson</span></div>
           <p class="pricing-desc">Perfect for picking up a specific skill</p>
           <ul class="pricing-features"><li>HD video + downloadable resources</li><li>Lifetime access</li><li>30-day money-back guarantee</li><li>Learn on any device</li></ul>
-          <a href="#lessons" class="btn btn-secondary" style="width:100%;justify-content:center;"><span>Browse Lessons →</span></a>
+          <a href="javascript:void(0)" class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="openPayment('Single Lesson (Any)','Single Lesson',15)"><span>Buy Single — ₵15</span></a>
         </div>
         <div class="pricing-card featured reveal" style="transition-delay:0.2s">
           <div class="pricing-badge">Best Value</div>
@@ -365,14 +395,14 @@
           <div class="pricing-amount">₵99 <span>/ course</span></div>
           <p class="pricing-desc">5–8 lessons in a structured learning path, 40%+ savings</p>
           <ul class="pricing-features"><li>Everything in Single Lesson</li><li>5–8 curated lessons</li><li>Progress tracking & certificates</li><li>Priority support</li><li>Free updates for 1 year</li></ul>
-          <a href="#lessons" class="btn btn-primary" style="width:100%;justify-content:center;"><span>Explore Courses →</span></a>
+          <a href="javascript:void(0)" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="openPayment('Course Bundle','Course Bundle',99)"><span>Buy Bundle — ₵99</span></a>
         </div>
         <div class="pricing-card reveal" style="transition-delay:0.3s">
           <div class="pricing-name">All-Access Pass</div><div class="pricing-sub">Unlock everything</div>
           <div class="pricing-amount">₵35 <span>/ month</span></div>
           <p class="pricing-desc">Unlimited access to every lesson, every course</p>
           <ul class="pricing-features"><li>All 200+ lessons included</li><li>New lessons added weekly</li><li>Offline downloads on mobile</li><li>1-on-1 instructor Q&A (3x/month)</li><li>Cancel anytime</li></ul>
-          <a href="#contact" class="btn btn-secondary" style="width:100%;justify-content:center;"><span>Get Pass →</span></a>
+          <a href="javascript:void(0)" class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="openPayment('All-Access Pass (Monthly)','All-Access',35)"><span>Get Pass — ₵35/mo</span></a>
         </div>
       </div>
     </div>
@@ -413,7 +443,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand"><a href="#" class="logo"><span class="logo-icon">🎓</span>Know<span>How</span></a><p>Learn real-world skills from expert instructors. Pay per lesson, own forever. Built for Ghanaian graduate students.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a></div></div>
+        <div class="footer-brand"><a href="#" class="logo"><span class="logo-icon">📖</span>Know<span>How</span></a><p>Learn real-world skills from expert instructors. Pay per lesson, own forever. Built for Ghanaian graduate students.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a></div></div>
         <div><h4>Categories</h4><ul class="footer-links"><li><a href="#categories">KNUST Tools</a></li><li><a href="#categories">AI Research</a></li><li><a href="#categories">AI Writing</a></li><li><a href="#categories">Developer Tools</a></li></ul></div>
         <div><h4>Company</h4><ul class="footer-links"><li><a href="#how">How It Works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#testimonials">Reviews</a></li><li><a href="#">Help Center</a></li></ul></div>
         <div><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:hello@knowhow.com">hello@knowhow.com</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
@@ -437,40 +467,70 @@
     const raycaster = new THREE.Raycaster();
     scene.add(new THREE.AmbientLight(0x222244, 0.5));
 
-    // Graduation Cap
-    const capGroup = new THREE.Group();
-    const capMat = new THREE.MeshStandardMaterial({color:0xD4A843, emissive:0xD4A843, emissiveIntensity:0.12, metalness:0.15, roughness:0.5, transparent:true, opacity:0.75});
-    const board = new THREE.Mesh(new THREE.BoxGeometry(3.6,0.08,3.6), capMat);
-    board.position.y = 0.4; capGroup.add(board);
-    const wireCapMat = new THREE.MeshBasicMaterial({color:0xF0D68A, wireframe:true, transparent:true, opacity:0.08});
-    const boardWire = new THREE.Mesh(new THREE.BoxGeometry(3.7,0.1,3.7), wireCapMat);
-    boardWire.position.copy(board.position); capGroup.add(boardWire);
-    const skull = new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.2,0.55,16), capMat);
-    skull.position.y = -0.1; capGroup.add(skull);
-    const buttonMat = new THREE.MeshStandardMaterial({color:0xF0D68A, emissive:0xD4A843, emissiveIntensity:0.3, metalness:0.4, roughness:0.3});
-    const btn = new THREE.Mesh(new THREE.SphereGeometry(0.09,8,8), buttonMat);
-    btn.position.set(0,0.44,0); capGroup.add(btn);
-    const tasselCurve = new THREE.CatmullRomCurve3([new THREE.Vector3(0,0.44,0), new THREE.Vector3(0.4,0.3,-0.25), new THREE.Vector3(1.0,-0.1,-0.4), new THREE.Vector3(1.6,-0.6,-0.2)]);
-    const tasselMat = new THREE.MeshStandardMaterial({color:0xF0D68A, emissive:0xD4A843, emissiveIntensity:0.2, metalness:0.3, roughness:0.4});
-    const tassel = new THREE.Mesh(new THREE.TubeGeometry(tasselCurve,10,0.035,5,false), tasselMat);
-    capGroup.add(tassel);
-    const endMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.07,0.15,5), tasselMat);
-    endMesh.position.set(1.6,-0.6,-0.2); capGroup.add(endMesh);
+    const bookGroup = new THREE.Group();
+    const bookMat = new THREE.MeshStandardMaterial({color:0xD4A843, emissive:0xD4A843, emissiveIntensity:0.12, metalness:0.15, roughness:0.5, transparent:true, opacity:0.75});
+    const pageMat = new THREE.MeshStandardMaterial({color:0xF0D68A, emissive:0xD4A843, emissiveIntensity:0.08, metalness:0.05, roughness:0.8, transparent:true, opacity:0.65, side:THREE.DoubleSide});
+
+    // Left page
+    const pageGeo = new THREE.PlaneGeometry(2.4, 3.2, 8, 1);
+    const leftPage = new THREE.Mesh(pageGeo, pageMat.clone());
+    leftPage.position.set(-1.2, 0, 0);
+    leftPage.rotation.y = 0.15;
+    const lp = leftPage.geometry.attributes.position;
+    for(let i=0;i<lp.count;i++){const x=lp.getX(i);lp.setZ(i, Math.abs(x)*0.12);}
+    leftPage.geometry.computeVertexNormals();
+    bookGroup.add(leftPage);
+
+    // Right page
+    const rightPage = new THREE.Mesh(pageGeo.clone(), pageMat.clone());
+    rightPage.position.set(1.2, 0, 0);
+    rightPage.rotation.y = -0.15;
+    const rp = rightPage.geometry.attributes.position;
+    for(let i=0;i<rp.count;i++){const x=rp.getX(i);rp.setZ(i, Math.abs(x)*0.12);}
+    rightPage.geometry.computeVertexNormals();
+    bookGroup.add(rightPage);
+
+    // Spine
+    const spine = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 3.3, 12), bookMat);
+    spine.position.set(0, 0, 0.05);
+    bookGroup.add(spine);
+
+    // Cover
+    const cover = new THREE.Mesh(new THREE.BoxGeometry(5.0, 3.5, 0.12), bookMat);
+    cover.position.set(0, 0, -0.15);
+    bookGroup.add(cover);
+    const coverWire = new THREE.Mesh(new THREE.BoxGeometry(5.1, 3.6, 0.14), new THREE.MeshBasicMaterial({color:0xF0D68A, wireframe:true, transparent:true, opacity:0.06}));
+    coverWire.position.copy(cover.position);
+    bookGroup.add(coverWire);
+
+    // Text lines on pages
+    const lineMat = new THREE.MeshBasicMaterial({color:0xD4A843, transparent:true, opacity:0.3});
+    for(let i=0; i<6; i++){
+      const lg = new THREE.BoxGeometry(1.6, 0.03, 0.01);
+      const ll = new THREE.Mesh(lg, lineMat); ll.position.set(-1.2, 0.9-i*0.35, 0.08); ll.rotation.y=0.15; bookGroup.add(ll);
+      const rl = new THREE.Mesh(lg.clone(), lineMat); rl.position.set(1.2, 0.9-i*0.35, 0.08); rl.rotation.y=-0.15; bookGroup.add(rl);
+    }
 
     // Glow particles
     const glowCount=50, glowGeo=new THREE.BufferGeometry(), glowPos=new Float32Array(glowCount*3);
-    for(let i=0;i<glowCount;i++){const t=(i/glowCount)*Math.PI*2,r=3+Math.random()*0.5;glowPos[i*3]=Math.cos(t)*r;glowPos[i*3+1]=Math.sin(t)*r*0.5+0.3;glowPos[i*3+2]=(Math.random()-0.5)*1.2;}
+    for(let i=0;i<glowCount;i++){const t=(i/glowCount)*Math.PI*2, r=3.5+Math.random()*0.5;glowPos[i*3]=Math.cos(t)*r;glowPos[i*3+1]=Math.sin(t)*r*0.4;glowPos[i*3+2]=(Math.random()-0.5)*1.2;}
     glowGeo.setAttribute('position',new THREE.BufferAttribute(glowPos,3));
     const glowMat=new THREE.PointsMaterial({color:0xD4A843,size:0.06,transparent:true,opacity:0.25,blending:THREE.AdditiveBlending,depthWrite:false});
-    capGroup.add(new THREE.Points(glowGeo,glowMat));
-    capGroup.position.set(0,3,0); capGroup.scale.set(4,4,4); scene.add(capGroup);
-    capGroup.traverse(c=>{if(c.isMesh)clickables.push(c);});
+    bookGroup.add(new THREE.Points(glowGeo,glowMat));
 
-    const capRing=new THREE.Mesh(new THREE.TorusGeometry(1.8,0.035,8,48),new THREE.MeshBasicMaterial({color:0xD4A843,transparent:true,opacity:0.35,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide}));
-    capRing.position.y=0.3;capRing.rotation.x=Math.PI/2.8;capGroup.add(capRing);
-    const innerRing=capRing.clone();innerRing.scale.set(0.65,0.65,0.65);innerRing.position.y=-0.4;innerRing.material=capRing.material.clone();innerRing.material.opacity=0.2;capGroup.add(innerRing);
+    // Orbit rings
+    const ringMat = new THREE.MeshBasicMaterial({color:0xD4A843,transparent:true,opacity:0.3,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(3.2,0.03,8,48), ringMat);
+    ring1.rotation.x = Math.PI/2.5; bookGroup.add(ring1);
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.2,0.025,8,48), ringMat.clone());
+    ring2.rotation.x = Math.PI/1.8; ring2.rotation.z = 0.3; ring2.material.opacity = 0.18;
+    bookGroup.add(ring2);
 
-    // Particles
+    bookGroup.position.set(0, 3, 0); bookGroup.scale.set(3.2, 3.2, 3.2);
+    scene.add(bookGroup);
+    bookGroup.traverse(c=>{if(c.isMesh)clickables.push(c);});
+
+    // Ambient dust
     const particleCount=60,particleGeo=new THREE.BufferGeometry(),positions=new Float32Array(particleCount*3),particleSpeeds=[];
     for(let i=0;i<particleCount;i++){positions[i*3]=(Math.random()-0.5)*30;positions[i*3+1]=(Math.random()-0.5)*25;positions[i*3+2]=(Math.random()-0.5)*20-5;particleSpeeds.push({x:(Math.random()-0.5)*0.003,phase:Math.random()*Math.PI*2});}
     particleGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));
@@ -481,8 +541,8 @@
     document.addEventListener('mousemove',e=>{tmx=(e.clientX/window.innerWidth)*2-1;tmy=-(e.clientY/window.innerHeight)*2+1;});
     document.addEventListener('click',e=>{const mx=(e.clientX/window.innerWidth)*2-1,my=-(e.clientY/window.innerHeight)*2+1;raycaster.setFromCamera(new THREE.Vector2(mx,my),camera);if(raycaster.intersectObjects(clickables,true).length>0)cbt=1.0;});
     document.addEventListener('touchstart',e=>{const t=e.touches[0],mx=(t.clientX/window.innerWidth)*2-1,my=-(t.clientY/window.innerHeight)*2+1;raycaster.setFromCamera(new THREE.Vector2(mx,my),camera);if(raycaster.intersectObjects(clickables,true).length>0)cbt=1.0;},{passive:true});
-
     window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+
     let time=0;
     function animate(){
       requestAnimationFrame(animate);time+=0.005;
@@ -490,15 +550,28 @@
       clickBounce+=(cbt-clickBounce)*0.08;if(Math.abs(clickBounce-cbt)<0.001)cbt=0;
       const bs=1+clickBounce*0.15;
       camera.position.z=18+mouseY*1.5;
-      capGroup.rotation.x+=0.0008;capGroup.rotation.y+=0.0012;capGroup.rotation.z+=0.0003;
-      capGroup.position.y=-0.5+Math.sin(time*0.5)*0.5;
-      capGroup.position.x=mouseX*3;capGroup.position.z=mouseY*1.5;
-      capGroup.scale.set(4*bs,4*bs,4*bs);
-      capMat.emissiveIntensity=0.1+0.3*Math.abs(Math.sin(time));
+
+      bookGroup.rotation.x+=0.0006;bookGroup.rotation.y+=0.001;bookGroup.rotation.z+=0.0002;
+      bookGroup.position.y=-0.5+Math.sin(time*0.5)*0.5;
+      bookGroup.position.x=mouseX*3;bookGroup.position.z=mouseY*1.5;
+      bookGroup.scale.set(3.2*bs,3.2*bs,3.2*bs);
+
+      // Page flutter
+      const t2=time*2;
+      const lp2=leftPage.geometry.attributes.position;
+      for(let i=0;i<lp2.count;i++){const x=lp2.getX(i);lp2.setZ(i,Math.abs(x)*0.12+Math.sin(t2+i*0.3)*0.02);}
+      leftPage.geometry.attributes.position.needsUpdate=true;
+      const rp2=rightPage.geometry.attributes.position;
+      for(let i=0;i<rp2.count;i++){const x=rp2.getX(i);rp2.setZ(i,Math.abs(x)*0.12+Math.sin(t2+i*0.3+1)*0.02);}
+      rightPage.geometry.attributes.position.needsUpdate=true;
+
+      bookMat.emissiveIntensity=0.1+0.25*Math.abs(Math.sin(time));
       glowMat.opacity=0.25*(0.5+0.5*Math.abs(Math.sin(time*0.7)));
-      tassel.rotation.z=Math.sin(time*0.7+1)*0.08;
-      capRing.rotation.z+=0.006;innerRing.rotation.z-=0.01;
-      const rp=0.7+Math.sin(time*1.5)*0.3;capRing.material.opacity=0.35*rp;innerRing.material.opacity=0.2*rp;
+      pageMat.opacity=0.55+0.1*Math.abs(Math.sin(time*0.5));
+
+      ring1.rotation.z+=0.004;ring2.rotation.z-=0.006;
+      const rpv=0.7+Math.sin(time*1.5)*0.3;ring1.material.opacity=0.3*rpv;ring2.material.opacity=0.18*rpv;
+
       const pa=particleSystem.geometry.attributes.position.array;
       for(let i=0;i<particleCount;i++){const i3=i*3;pa[i3]+=particleSpeeds[i].x;pa[i3+1]+=Math.sin(time+particleSpeeds[i].phase)*0.001;if(pa[i3]>15)pa[i3]=-15;if(pa[i3]<-15)pa[i3]=15;if(pa[i3+1]>12.5)pa[i3+1]=-12.5;if(pa[i3+1]<-12.5)pa[i3+1]=12.5;}
       particleSystem.geometry.attributes.position.needsUpdate=true;
@@ -532,5 +605,115 @@
     const sso=new IntersectionObserver(e=>{if(e[0].isIntersecting&&!sa){sa=true;hs.forEach((el,i)=>{const t=sv[i],np=parseInt(t),sfx=t.replace(np,''),dur=1500,st=performance.now();function ac(n){const el2=n-st,p=Math.min(el2/dur,1),e2=1-Math.pow(1-p,3);el.textContent=Math.floor(e2*np)+sfx;if(p<1)requestAnimationFrame(ac);else el.textContent=t;}requestAnimationFrame(ac);});}},{threshold:0.5});
     if(hs.length)sso.observe(hs[0].closest('.hero-stats'));
   </script>
+
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-modal">
+    <button class="pay-close" id="payClose">&times;</button>
+    <div id="payForm">
+      <span class="pay-test-badge">TEST MODE — No real charges</span>
+      <h3>Complete Your Purchase</h3>
+      <p class="pay-desc">You are about to purchase this lesson. This is a test environment — no real money will be charged.</p>
+      <div class="pay-lesson-name">
+        <strong id="payLessonTitle">Lesson Title</strong>
+        <div class="pay-cat" id="payLessonCat">Category</div>
+      </div>
+      <div class="pay-field">
+        <label for="payName">Full Name</label>
+        <input type="text" id="payName" placeholder="e.g. Kwame Asante" required />
+      </div>
+      <div class="pay-field">
+        <label for="payEmail">Email Address</label>
+        <input type="email" id="payEmail" placeholder="student@knust.edu.gh" required />
+      </div>
+      <div class="pay-total">
+        <span class="pay-label">Total</span>
+        <span class="pay-amount" id="payAmount">₵25</span>
+      </div>
+      <button class="pay-btn" id="payBtn" onclick="processPayment()">
+        <span>Pay with Paystack (Test)</span>
+      </button>
+    </div>
+    <div id="paySuccess" style="display:none">
+      <div class="pay-success">
+        <div class="check">✅</div>
+        <h4>Payment Successful!</h4>
+        <p>Your lesson access has been unlocked. Check your email for the download link.</p>
+        <p style="margin-top:16px"><small style="color:var(--text-dim)">Reference: <span id="payRef">—</span></small></p>
+        <button class="pay-btn" style="margin-top:20px" onclick="closePayment()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+const PAYSTACK_KEY = 'pk_test_9c5a2052e795fb4da811786934420184a4f7b255';
+let currentLesson = { title: '', category: '', price: 0, priceCedis: 0 };
+
+function openPayment(title, category, priceCedis) {
+  currentLesson = { title, category, priceCedis, price: priceCedis * 100 };
+  document.getElementById('payLessonTitle').textContent = title;
+  document.getElementById('payLessonCat').textContent = category;
+  document.getElementById('payAmount').textContent = '\u20b5' + priceCedis;
+  document.getElementById('payForm').style.display = 'block';
+  document.getElementById('paySuccess').style.display = 'none';
+  document.getElementById('payOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePayment() {
+  document.getElementById('payOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('payClose').addEventListener('click', closePayment);
+document.getElementById('payOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePayment();
+});
+
+function processPayment() {
+  const name = document.getElementById('payName').value.trim();
+  const email = document.getElementById('payEmail').value.trim();
+  if (!name || !email) { alert('Please fill in your name and email.'); return; }
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>Opening Paystack...</span>';
+  try {
+    const handler = PaystackPop.setup({
+      key: PAYSTACK_KEY,
+      email: email,
+      amount: currentLesson.price,
+      currency: 'GHS',
+      ref: 'KNW-' + Date.now() + '-' + Math.random().toString(36).slice(2,7),
+      metadata: {
+        custom_fields: [
+          { display_name: 'Name', variable_name: 'name', value: name },
+          { display_name: 'Lesson', variable_name: 'lesson', value: currentLesson.title },
+          { display_name: 'Category', variable_name: 'category', value: currentLesson.category }
+        ]
+      },
+      callback: function(response) {
+        document.getElementById('payForm').style.display = 'none';
+        document.getElementById('paySuccess').style.display = 'block';
+        document.getElementById('payRef').textContent = response.reference;
+        btn.disabled = false;
+        btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
+      },
+      onClose: function() {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
+      }
+    });
+    handler.openIframe();
+  } catch(e) {
+    console.error('Paystack error:', e);
+    btn.disabled = false;
+    btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
+    alert('Payment error. Please try again.');
+  }
+}
+</script>
+
 </body>
 </html>
