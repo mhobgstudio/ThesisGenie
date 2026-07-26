@@ -1,271 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KnowHow — Learn How to Do Anything</title>
-  <meta name="description" content="Master new skills with bite-sized video lessons. From AI tools to coding — buy individual lessons or unlock full courses. Learn at your own pace." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --gold: #D4A843;
-      --gold-light: #F0D68A;
-      --gold-glow: rgba(212, 168, 67, 0.3);
-      --space-dark: #0A0A14;
-      --space-mid: #0E0E1E;
-      --space-blue: #111128;
-      --space-accent: #1A1A3E;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(212, 168, 67, 0.25);
-      --glass-hover: rgba(212, 168, 67, 0.14);
-      --text: #FFF8F0;
-      --text-muted: rgba(255, 248, 240, 0.95);
-      --text-dim: rgba(255, 248, 240, 0.78);
-      --white: #FFFFFF;
-      --radius: 20px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
-      --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      --z-base: 1; --z-content: 10; --z-overlay: 20; --z-nav: 100; --z-three: 0;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--space-dark); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    ::selection { background: var(--gold); color: var(--space-dark); }
-    body::before { content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(212,168,67,0.008) 70%, rgba(212,168,67,0.015) 100%); }
-    body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.004; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--space-dark); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-    .scroll-progress { position: fixed; top: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)); z-index: 10001; transition: width 0.1s linear; }
-    #three-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: var(--z-three); pointer-events: none; }
-    .reveal { opacity: 0; transform: translateY(50px); transition: opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1); }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right { opacity: 0; transform: translateX(60px); transition: opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1); }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 28px; position: relative; z-index: var(--z-content); }
-    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-nav); padding: 18px 0; transition: var(--transition); }
-    .navbar.scrolled { background: rgba(10,10,20,0.85); backdrop-filter: blur(30px) saturate(1.4); -webkit-backdrop-filter: blur(30px) saturate(1.4); padding: 10px 0; border-bottom: 1px solid rgba(212,168,67,0.06); }
-    .navbar .container { display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; text-decoration: none; }
-    .logo-icon { width: 34px; height: 34px; border: 1.5px solid var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gold); background: rgba(212,168,67,0.06); transition: transform 0.6s ease; animation: logoGlow 3s ease-in-out infinite; }
-    @keyframes logoGlow { 0%,100% { box-shadow: 0 0 4px rgba(212,168,67,0.1); } 50% { box-shadow: 0 0 16px rgba(212,168,67,0.25), 0 0 30px rgba(212,168,67,0.08); } }
-    .logo:hover .logo-icon { transform: rotate(90deg); }
-    .logo span { color: var(--gold); }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-links a { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; transition: var(--transition); position: relative; letter-spacing: 0.3px; padding: 4px 0; text-decoration: none; }
-    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-links a.active { color: var(--gold) !important; }
-    .nav-links a.active::after { width: 100% !important; }
-    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--text); font-size: 24px; }
-    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
-    .hero-content { position: relative; z-index: var(--z-content); display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; padding: 80px 0 60px; }
-    .hero-text { position: relative; }
-    .hero-badge-glow { display: inline-flex; align-items: center; gap: 8px; background: rgba(212,168,67,0.06); border: 1px solid rgba(212,168,67,0.12); padding: 6px 16px 6px 8px; border-radius: 50px; font-size: 0.75rem; color: var(--gold-light); letter-spacing: 0.5px; margin-bottom: 28px; animation: badgePulse 4s ease-in-out infinite; }
-    .hero-badge-glow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: dotPulse 2s ease-in-out infinite; }
-    @keyframes dotPulse { 0%,100% { opacity: 1; box-shadow: 0 0 6px var(--gold); } 50% { opacity: 0.4; } }
-    @keyframes badgePulse { 0%,100% { border-color: rgba(212,168,67,0.12); } 50% { border-color: rgba(212,168,67,0.25); } }
-    .hero-text h1 { font-family: 'Space Grotesk', sans-serif; font-size: 4.2rem; font-weight: 700; color: var(--text); margin-bottom: 20px; line-height: 1.08; letter-spacing: -1.5px; text-shadow: 0 0 40px rgba(212,168,67,0.08), 0 0 80px rgba(212,168,67,0.04); }
-    .hero-text h1 .line-1 { display: block; }
-    .hero-text h1 .line-2 { display: block; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 36px; max-width: 480px; line-height: 1.8; }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; text-decoration: none; }
-    .btn-primary { background: linear-gradient(135deg, var(--gold), #C49A35); color: var(--space-dark); box-shadow: 0 4px 24px rgba(212,168,67,0.25); position: relative; overflow: hidden; }
-    .btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold-light), var(--gold)); opacity: 0; transition: opacity 0.4s ease; }
-    .btn-primary:hover::before { opacity: 1; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(212,168,67,0.4); }
-    .btn-primary::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); transform: skewX(-25deg); transition: left 0.6s ease; }
-    .btn-primary:hover::after { left: 120%; }
-    .btn-primary span { position: relative; z-index: 1; }
-    .btn-secondary { background: var(--glass); border: 1px solid var(--glass-border); color: var(--text); }
-    .btn-secondary:hover { background: var(--glass-hover); border-color: rgba(212,168,67,0.2); transform: translateY(-2px); }
-    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(212,168,67,0.08); }
-    .hero-stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-stat-label { color: var(--text-dim); font-size: 0.78rem; font-weight: 400; margin-top: 2px; }
-    .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .hero-card { background: var(--glass); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 36px 32px; width: 100%; max-width: 400px; transition: var(--transition); position: relative; }
-    .hero-card::before { content: ''; position: absolute; inset: -1px; border-radius: var(--radius); padding: 1px; background: linear-gradient(135deg, rgba(212,168,67,0.35), rgba(212,168,67,0.05), rgba(212,168,67,0.25), transparent, rgba(212,168,67,0.15)); background-size: 300% 300%; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; animation: borderShimmer 5s ease-in-out infinite; }
-    @keyframes borderShimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    .hero-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(212,168,67,0.06); }
-    .hero-card-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(212,168,67,0.08); display: flex; align-items: center; justify-content: center; font-size: 20px; border: 1px solid rgba(212,168,67,0.12); }
-    .hero-card-title { font-weight: 600; font-size: 1rem; color: var(--text); }
-    .hero-card-sub { color: var(--text-dim); font-size: 0.8rem; }
-    .hero-card-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 16px; }
-    .hero-card-price .amount { font-family: 'Space Grotesk', sans-serif; font-size: 2.6rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-card-price .label { color: var(--text-dim); font-size: 0.85rem; }
-    .hero-card-list { list-style: none; margin-bottom: 24px; }
-    .hero-card-list li { color: var(--text-muted); font-size: 0.88rem; padding: 6px 0; display: flex; align-items: center; gap: 10px; }
-    .hero-card-list li::before { content: '✦'; color: var(--gold); font-size: 0.7rem; }
-    .section { padding: 120px 0; position: relative; }
-    .section-header { text-align: center; max-width: 680px; margin: 0 auto 60px; }
-    .section-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(212,168,67,0.06); border: 1px solid rgba(212,168,67,0.1); padding: 5px 18px; border-radius: 50px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-light); margin-bottom: 20px; }
-    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--text); margin-bottom: 22px; letter-spacing: -1px; }
-    .section-title .highlight { background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .section-sub { color: var(--text-muted); font-size: 1rem; font-weight: 400; line-height: 1.8; }
-
-    /* CATEGORIES */
-    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .category-card { text-align: center; padding: 36px 20px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); transition: var(--transition); cursor: pointer; text-decoration: none; }
-    .category-card:hover { background: var(--glass-hover); border-color: rgba(212,168,67,0.2); transform: translateY(-4px); }
-    .category-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
-    .category-card h3 { font-size: 1rem; color: var(--text); margin-bottom: 6px; font-weight: 600; }
-    .category-card p { color: var(--text-dim); font-size: 0.8rem; }
-    .category-count { display: inline-block; margin-top: 10px; background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.1); color: var(--gold-light); padding: 3px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
-
-    /* LESSONS */
-    .lessons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .lesson-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; transition: var(--transition); text-decoration: none; display: block; }
-    .lesson-card:hover { border-color: rgba(212,168,67,0.2); transform: translateY(-6px); background: rgba(212,168,67,0.02); }
-    .lesson-thumb { height: 180px; background: linear-gradient(135deg, var(--space-accent), var(--space-mid)); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; overflow: hidden; }
-    .lesson-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(10,10,20,0.6)); }
-    .lesson-duration { position: absolute; bottom: 10px; right: 12px; background: rgba(10,10,20,0.75); backdrop-filter: blur(8px); color: var(--gold-light); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; z-index: 2; }
-    .lesson-body { padding: 24px; }
-    .lesson-category { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 8px; }
-    .lesson-card h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 8px; font-weight: 600; }
-    .lesson-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
-    .lesson-meta { display: flex; align-items: center; justify-content: space-between; }
-    .lesson-price { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .lesson-rating { color: var(--gold); font-size: 0.78rem; letter-spacing: 1px; }
-    .lesson-rating span { color: var(--text-dim); margin-left: 4px; }
-
-    /* STEPS */
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .step-card { text-align: center; padding: 40px 24px; border-radius: var(--radius); background: var(--glass); border: 1px solid var(--glass-border); transition: var(--transition); }
-    .step-card:hover { background: var(--glass-hover); transform: translateY(-4px); }
-    .step-number { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid rgba(212,168,67,0.25); background: rgba(212,168,67,0.04); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); transition: var(--transition); }
-    .step-card:hover .step-number { border-color: var(--gold); background: rgba(212,168,67,0.08); box-shadow: 0 0 24px rgba(212,168,67,0.1); }
-    .step-card h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 10px; font-weight: 600; }
-    .step-card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
-
-    /* PRICING */
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .pricing-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 40px 32px; text-align: center; transition: var(--transition); position: relative; }
-    .pricing-card:hover { transform: translateY(-6px); background: rgba(212,168,67,0.02); }
-    .pricing-card.featured { border-color: rgba(212,168,67,0.25); background: rgba(212,168,67,0.03); }
-    .pricing-badge { display: inline-block; background: linear-gradient(135deg, var(--gold), #C49A35); color: var(--space-dark); padding: 4px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
-    .pricing-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .pricing-sub { color: var(--text-dim); font-size: 0.82rem; margin-bottom: 20px; }
-    .pricing-amount { font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
-    .pricing-amount span { font-size: 0.9rem; background: none; -webkit-text-fill-color: var(--text-dim); }
-    .pricing-desc { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(212,168,67,0.06); }
-    .pricing-features { list-style: none; margin-bottom: 28px; text-align: left; }
-    .pricing-features li { padding: 7px 0; font-size: 0.88rem; display: flex; align-items: center; gap: 10px; color: var(--text-muted); }
-    .pricing-features li::before { content: '✦'; color: var(--gold); font-size: 0.65rem; flex-shrink: 0; }
-
-    /* TESTIMONIALS */
-    .testimonials-section { border-top: 1px solid rgba(212,168,67,0.04); }
-    .testimonials-grid { display: flex; overflow: hidden; position: relative; min-height: 260px; }
-    .testimonials-track { display: flex; transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); width: 100%; }
-    .testimonials-track .testimonial-card { min-width: 100%; box-sizing: border-box; }
-    .testimonial-dots { display: flex; justify-content: center; gap: 10px; margin-top: 28px; }
-    .testimonial-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--gold); background: transparent; cursor: pointer; padding: 0; }
-    .testimonial-dot.active { background: var(--gold); box-shadow: 0 0 10px var(--gold-glow); }
-    .testimonial-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 32px; }
-    .testimonial-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; letter-spacing: 2px; }
-    .testimonial-text { color: var(--text-muted); font-style: italic; font-size: 0.9rem; margin-bottom: 20px; line-height: 1.8; }
-    .testimonial-author { display: flex; align-items: center; gap: 12px; }
-    .testimonial-avatar { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(212,168,67,0.2); background: rgba(212,168,67,0.06); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.8rem; color: var(--gold); }
-    .testimonial-name { font-weight: 600; font-size: 0.85rem; color: var(--text); }
-    .testimonial-role { color: var(--text-dim); font-size: 0.75rem; }
-
-    /* CTA */
-    .cta-section { padding: 100px 0; text-align: center; position: relative; border-top: 1px solid rgba(212,168,67,0.04); }
-    .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(212,168,67,0.03) 0%, transparent 70%); }
-    .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 2.6rem; font-weight: 700; color: var(--text); margin-bottom: 14px; }
-    .cta-section p { color: var(--text-muted); font-size: 1rem; margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    /* FOOTER */
-    .footer { padding: 70px 0 30px; color: var(--text-dim); border-top: 1px solid rgba(212,168,67,0.04); }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand p { font-size: 0.88rem; margin-bottom: 20px; max-width: 320px; line-height: 1.8; }
-    .footer-social { display: flex; gap: 10px; }
-    .footer-social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 0.9rem; color: var(--text-dim); text-decoration: none; }
-    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
-    .footer h4 { color: var(--text); font-size: 0.85rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
-    .footer-links { list-style: none; }
-    .footer-links li { margin-bottom: 10px; }
-    .footer-links a { font-size: 0.88rem; color: var(--text-dim); text-decoration: none; transition: var(--transition); }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.03); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; flex-wrap: wrap; gap: 12px; }
-    .back-to-top { position: fixed; bottom: 90px; right: 28px; z-index: 998; width: 44px; height: 44px; border-radius: 50%; background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.15); color: var(--gold-light); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); opacity: 0; transform: translateY(20px); pointer-events: none; }
-    .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .back-to-top:hover { background: rgba(212,168,67,0.15); transform: translateY(-3px); }
-    .typing-spark { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--gold-light); pointer-events: none; z-index: 5; left: 50%; top: 50%; animation: typingBurst 1.2s ease-out forwards; box-shadow: 0 0 6px var(--gold); }
-    @keyframes typingBurst { 0% { opacity: 1; transform: translate(0,0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx),var(--ty)) scale(0); } }
-
-    @media (max-width: 1024px) {
-      .hero-content { grid-template-columns: 1fr; text-align: center; }
-      .hero-sub { margin: 0 auto 36px; }
-      .hero-actions { justify-content: center; }
-      .hero-visual { display: none; }
-      .categories-grid { grid-template-columns: repeat(2, 1fr); }
-      .lessons-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .hero-text h1 { font-size: 3.2rem; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-toggle { display: block; }
-      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10,10,20,0.95); backdrop-filter: blur(30px); padding: 24px; gap: 20px; align-items: center; border-bottom: 1px solid rgba(212,168,67,0.06); }
-      .container { padding: 0 20px; }
-      .hero-text h1 { font-size: 2.2rem; }
-      .section-title { font-size: 1.8rem; }
-      .categories-grid, .lessons-grid, .steps-grid, .pricing-grid { grid-template-columns: 1fr; max-width: 100%; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .section { padding: 60px 0; }
-    }
-    @media (max-width: 480px) {
-      .hero-text h1 { font-size: 1.8rem; }
-      .hero-actions { flex-direction: column; align-items: stretch; }
-      .btn { justify-content: center; width: 100%; }
-    }
-  
-/* PAYMENT MODAL */
-.pay-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:10000;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease}
-.pay-overlay.active{display:flex;opacity:1}
-.pay-modal{background:var(--space-mid,#0E0E1E);border:1px solid var(--glass-border);border-radius:var(--radius);padding:40px;max-width:440px;width:90%;position:relative;transform:scale(0.9);transition:transform 0.3s ease}
-.pay-overlay.active .pay-modal{transform:scale(1)}
-.pay-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:24px;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
-.pay-close:hover{background:rgba(255,255,255,0.06);color:var(--text)}
-.pay-modal h3{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:8px}
-.pay-modal .pay-desc{color:var(--text-dim);font-size:0.9rem;margin-bottom:24px}
-.pay-modal .pay-lesson-name{background:rgba(212,168,67,0.06);border:1px solid rgba(212,168,67,0.12);border-radius:var(--radius-md);padding:16px;margin-bottom:20px}
-.pay-modal .pay-lesson-name strong{color:var(--gold-light);font-size:0.95rem}
-.pay-modal .pay-lesson-name .pay-cat{font-size:0.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-.pay-field{margin-bottom:16px}
-.pay-field label{display:block;font-size:0.72rem;font-weight:600;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
-.pay-field input,.pay-field select{width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.88rem;transition:var(--transition)}
-.pay-field input:focus,.pay-field select:focus{outline:none;border-color:rgba(212,168,67,0.3);box-shadow:0 0 20px rgba(212,168,67,0.05)}
-.pay-field input::placeholder{color:rgba(240,232,216,0.3)}
-.pay-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1px solid rgba(212,168,67,0.08);margin-top:8px;margin-bottom:20px}
-.pay-total .pay-label{color:var(--text-dim);font-size:0.9rem}
-.pay-total .pay-amount{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.pay-btn{width:100%;padding:14px;border:none;border-radius:50px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:var(--transition);font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--gold),#C49A35);color:var(--space-dark);box-shadow:0 4px 24px rgba(212,168,67,0.25)}
-.pay-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,67,0.4)}
-.pay-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
-.pay-test-badge{display:inline-block;background:rgba(212,168,67,0.08);border:1px solid rgba(212,168,67,0.12);color:var(--gold-light);padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;margin-bottom:16px}
-.pay-success{text-align:center;padding:20px 0}
-.pay-success .check{font-size:3rem;margin-bottom:12px}
-.pay-success h4{font-size:1.2rem;margin-bottom:8px}
-.pay-success p{color:var(--text-dim);font-size:0.9rem}
-
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KnowHow — Learn How to Do Anything</title>
+<meta name="description" content="Master real-world skills with bite-sized video lessons. Buy individual lessons or unlock full courses." />
+<meta property="og:title" content="KnowHow — Learn How to Do Anything" />
+<meta property="og:description" content="Master real-world skills with bite-sized video lessons. Buy individual lessons or unlock full courses." />
+<meta property="og:url" content="https://knowhow.vercel.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="KnowHow" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="KnowHow — Learn How to Do Anything" />
+<meta name="twitter:description" content="Master real-world skills with bite-sized video lessons." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared/style.css" />
+<style>
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+.hero-content{position:relative;z-index:var(--z-content);display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:center;padding:80px 0 60px}
+.hero-text{position:relative}
+.hero-badge-glow{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,0.06);border:1px solid rgba(212,168,67,0.12);padding:6px 16px 6px 8px;border-radius:50px;font-size:0.75rem;color:var(--gold-light);margin-bottom:28px}
+.hero-badge-glow .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hero-text h1{font-family:'Space Grotesk',sans-serif;font-size:4.2rem;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.08;letter-spacing:-1.5px}
+.hero-text h1 .line-1{display:block}
+.hero-text h1 .line-2{display:block;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--text-muted);margin-bottom:36px;max-width:480px;line-height:1.8}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(212,168,67,0.08)}
+.hero-stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{color:var(--text-dim);font-size:0.78rem;margin-top:2px}
+.hero-visual{display:flex;justify-content:center;align-items:center}
+.hero-card{background:var(--glass);backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--radius);padding:36px 32px;width:100%;max-width:400px;transition:var(--transition);position:relative}
+.hero-card-top{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(212,168,67,0.06)}
+.hero-card-icon{width:44px;height:44px;border-radius:12px;background:rgba(212,168,67,0.08);display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid rgba(212,168,67,0.12)}
+.hero-card-title{font-weight:600;font-size:1rem}
+.hero-card-sub{color:var(--text-dim);font-size:0.8rem}
+.hero-card-price{display:flex;align-items:baseline;gap:6px;margin-bottom:16px}
+.hero-card-price .amount{font-family:'Space Grotesk',sans-serif;font-size:2.6rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-card-price .label{color:var(--text-dim);font-size:0.85rem}
+.hero-card-list{list-style:none;margin-bottom:24px}
+.hero-card-list li{color:var(--text-muted);font-size:0.88rem;padding:6px 0;display:flex;align-items:center;gap:10px}
+.hero-card-list li::before{content:'º6';color:var(--gold);font-size:0.7rem}
+@media(max-width:1024px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-sub{margin:0 auto 36px}.hero-actions{justify-content:center}.hero-visual{display:none}.hero-text h1{font-size:3.2rem}}
+@media(max-width:768px){.hero-text h1{font-size:2.2rem}}
+@media(max-width:480px){.hero-text h1{font-size:1.8rem}.hero-actions{flex-direction:column;align-items:stretch}.btn{justify-content:center;width:100%}}
+</style>
 </head>
 <body>
-  <div class="scroll-progress" id="scrollProgress"></div>
-  <canvas id="three-canvas" aria-hidden="true"></canvas>
-
-  <nav class="navbar" id="navbar">
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="scroll-progress" id="scrollProgress"></div>
+<canvas id="three-canvas" aria-hidden="true"></canvas>
+<nav class="navbar" id="navbar">
     <div class="container">
       <a href="#" class="logo"><span class="logo-icon">📖</span>Know<span>How</span></a>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
@@ -282,43 +70,48 @@
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <div class="hero-badge-glow"><span class="dot"></span>Learn anything · Pay per lesson</div>
-          <h1><span class="line-1">Learn How</span><span class="line-2">to Do Anything.</span></h1>
-          <p class="hero-sub">Master real-world skills with bite-sized video lessons from expert instructors. Buy individual lessons or unlock full courses — learn at your own pace.</p>
-          <div class="hero-actions">
-            <a href="#lessons" class="btn btn-primary"><span>Browse Lessons</span></a>
-            <a href="#how" class="btn btn-secondary">How It Works</a>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat"><div class="hero-stat-num">200+</div><div class="hero-stat-label">Video Lessons</div></div>
-            <div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Expert Instructors</div></div>
-            <div class="hero-stat"><div class="hero-stat-num">12K</div><div class="hero-stat-label">Students Learning</div></div>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <div class="hero-card" id="heroCard">
-            <div class="hero-card-top"><div class="hero-card-icon">🔥</div><div><div class="hero-card-title">Featured Lesson</div><div class="hero-card-sub">AI Research Assistant</div></div></div>
-            <div class="hero-card-price"><span class="amount">₵25</span><span class="label">/ lesson</span></div>
-            <ul class="hero-card-list">
-              <li>HD video with step-by-step demos</li>
-              <li>Downloadable prompt templates</li>
-              <li>Lifetime access once purchased</li>
-              <li>30-day money-back guarantee</li>
-            </ul>
-            <a href="javascript:void(0)" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="openPayment('AI Research Assistant','AI Research',25)"><span>Buy — ₵25 →</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="hero" id="home">
+<div class="container">
+<div class="hero-content">
+<div class="hero-text">
+<div class="hero-badge-glow"><span class="dot"></span>Learn anything · Pay per lesson</div>
+<h1><span class="line-1">Learn How</span><span class="line-2">to Do Anything.</span></h1>
+<p class="hero-sub">Master real-world skills with bite-sized video lessons from expert instructors. Buy individual lessons or unlock full courses — learn at your own pace.</p>
+<div class="hero-actions">
+<a href="#lessons" class="btn btn-primary"><span>Browse Lessons</span></a>
+<a href="#how" class="btn btn-secondary">How It Works</a>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><div class="hero-stat-num">200+</div><div class="hero-stat-label">Video Lessons</div></div>
+<div class="hero-stat"><div class="hero-stat-num">50+</div><div class="hero-stat-label">Expert Instructors</div></div>
+<div class="hero-stat"><div class="hero-stat-num">12K</div><div class="hero-stat-label">Students Learning</div></div>
+</div>
+</div>
+<div class="hero-visual">
+<div class="hero-card" id="heroCard">
+<div class="hero-card-top"><div class="hero-card-icon">🔥</div><div><div class="hero-card-title">Featured Lesson</div><div class="hero-card-sub">AI Research Assistant</div></div></div>
+<div class="hero-card-price"><span class="amount">₵25</span><span class="label">/ lesson</span></div>
+<ul class="hero-card-list">
+<li>HD video with step-by-step demos</li>
+<li>Downloadable prompt templates</li>
+<li>Lifetime access once purchased</li>
+<li>30-day money-back guarantee</li>
+</ul>
+<button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="openPayment('AI Research Assistant','AI Research',25)"><span>Buy — ₵25 →</span></button>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-  <!-- CATEGORIES -->
-  <section class="section" id="categories">
+<section class="section" id="main-content" style="padding-top:0">
+<div class="container">
+<div class="search-section" style="padding:0;max-width:600px;margin:0 auto">
+<input type="text" id="lessonSearch" class="search-bar" placeholder="🔍 Search lessons..." aria-label="Search lessons" />
+</div>
+</div>
+</section>
+<section class="section" id="categories">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">✦ Explore</span>
@@ -337,9 +130,7 @@
       </div>
     </div>
   </section>
-
-  <!-- LESSONS -->
-  <section class="section" id="lessons">
+<section class="section" id="lessons">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">✦ Popular</span>
@@ -347,18 +138,16 @@
         <p class="section-sub">Hand-picked lessons for graduate students. Buy once, learn forever.</p>
       </div>
       <div class="lessons-grid">
-        <a href="lessons/ai-research-assistant.html" class="lesson-card reveal" style="transition-delay:0.1s"><div class="lesson-thumb">🔬<span class="lesson-duration">35 min</span></div><div class="lesson-body"><div class="lesson-category">AI Research</div><h3>Using AI as Your Research Assistant</h3><p>Master literature reviews with Perplexity, Brave Search & AI tools for doctoral-level research.</p><div class="lesson-meta"><span class="lesson-price">₵25</span><span class="lesson-rating">★★★★★ <span>(324)</span></span></div></div></a>
-        <a href="lessons/knust-tdms.html" class="lesson-card reveal" style="transition-delay:0.15s"><div class="lesson-thumb">🎓<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">KNUST Tools</div><h3>KNUST Thesis Deposition System (TDMS)</h3><p>Complete guide to submitting your thesis through the TDMS platform at KNUST.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(187)</span></span></div></div></a>
-        <a href="lessons/ai-detection-turnitin.html" class="lesson-card reveal" style="transition-delay:0.2s"><div class="lesson-thumb">🛡️<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">AI Writing</div><h3>Understanding AI Detection: How Turnitin Works</h3><p>Learn how Turnitin's AI detection algorithm works and what triggers detection.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(456)</span></span></div></div></a>
-        <a href="lessons/github-student-pack.html" class="lesson-card reveal" style="transition-delay:0.1s"><div class="lesson-thumb">🐙<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">Developer Tools</div><h3>GitHub Student Developer Pack</h3><p>Get free Copilot, Azure & 100+ tools with your KNUST student email.</p><div class="lesson-meta"><span class="lesson-price">₵15</span><span class="lesson-rating">★★★★★ <span>(298)</span></span></div></div></a>
-        <a href="lessons/ai-bypass-detection.html" class="lesson-card reveal" style="transition-delay:0.15s"><div class="lesson-thumb">✍️<span class="lesson-duration">30 min</span></div><div class="lesson-body"><div class="lesson-category">AI Writing</div><h3>Writing AI-Assisted Content That Passes Detection</h3><p>Techniques for natural-sounding AI-assisted writing that maintains academic integrity.</p><div class="lesson-meta"><span class="lesson-price">₵30</span><span class="lesson-rating">★★★★☆ <span>(213)</span></span></div></div></a>
-        <a href="lessons/terminal-ai.html" class="lesson-card reveal" style="transition-delay:0.2s"><div class="lesson-thumb">⌨️<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">Developer Tools</div><h3>Terminal AI: Copilot, Gemini & Kimi CLI</h3><p>Install and use AI assistants directly from your terminal command line.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(167)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('AI Research Assistant','AI Research',25) reveal" style="transition-delay:0.1s"><div class="lesson-thumb">🔬<span class="lesson-duration">35 min</span></div><div class="lesson-body"><div class="lesson-category">AI Research</div><h3>Using AI as Your Research Assistant</h3><p>Master literature reviews with Perplexity, Brave Search & AI tools for doctoral-level research.</p><div class="lesson-meta"><span class="lesson-price">₵25</span><span class="lesson-rating">★★★★★ <span>(324)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('KNUST Thesis Deposition System','KNUST Tools',20) reveal" style="transition-delay:0.15s"><div class="lesson-thumb">🎓<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">KNUST Tools</div><h3>KNUST Thesis Deposition System (TDMS)</h3><p>Complete guide to submitting your thesis through the TDMS platform at KNUST.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(187)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('Understanding AI Detection','AI Writing',20) reveal" style="transition-delay:0.2s"><div class="lesson-thumb">🛡️<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">AI Writing</div><h3>Understanding AI Detection: How Turnitin Works</h3><p>Learn how Turnitin's AI detection algorithm works and what triggers detection.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(456)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('GitHub Student Developer Pack','Developer Tools',15) reveal" style="transition-delay:0.1s"><div class="lesson-thumb">🐙<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">Developer Tools</div><h3>GitHub Student Developer Pack</h3><p>Get free Copilot, Azure & 100+ tools with your KNUST student email.</p><div class="lesson-meta"><span class="lesson-price">₵15</span><span class="lesson-rating">★★★★★ <span>(298)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('Writing AI-Assisted Content','AI Writing',30) reveal" style="transition-delay:0.15s"><div class="lesson-thumb">✍️<span class="lesson-duration">30 min</span></div><div class="lesson-body"><div class="lesson-category">AI Writing</div><h3>Writing AI-Assisted Content That Passes Detection</h3><p>Techniques for natural-sounding AI-assisted writing that maintains academic integrity.</p><div class="lesson-meta"><span class="lesson-price">₵30</span><span class="lesson-rating">★★★★☆ <span>(213)</span></span></div></div></a>
+        <a href="javascript:void(0)" class="lesson-card" onclick="openPayment('Terminal AI: Copilot, Gemini & Kimi','Developer Tools',20) reveal" style="transition-delay:0.2s"><div class="lesson-thumb">⌨️<span class="lesson-duration">25 min</span></div><div class="lesson-body"><div class="lesson-category">Developer Tools</div><h3>Terminal AI: Copilot, Gemini & Kimi CLI</h3><p>Install and use AI assistants directly from your terminal command line.</p><div class="lesson-meta"><span class="lesson-price">₵20</span><span class="lesson-rating">★★★★★ <span>(167)</span></span></div></div></a>
       </div>
     </div>
   </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section" id="how">
+<section class="section" id="how">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">✦ Simple</span>
@@ -372,9 +161,7 @@
       </div>
     </div>
   </section>
-
-  <!-- PRICING -->
-  <section class="section" id="pricing">
+<section class="section" id="pricing">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">✦ Plans</span>
@@ -407,9 +194,7 @@
       </div>
     </div>
   </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="section testimonials-section" id="testimonials">
+<section class="section testimonials-section" id="testimonials">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">✦ Reviews</span>
@@ -426,9 +211,7 @@
       <div class="testimonial-dots" id="testimonialDots"></div>
     </div>
   </section>
-
-  <!-- CTA -->
-  <section class="cta-section" id="contact">
+<section class="cta-section" id="contact">
     <div class="container">
       <h2 class="reveal">Start Learning Today 🎓</h2>
       <p class="reveal">Pick a lesson, pay once, gain a skill for life. No commitments required.</p>
@@ -438,9 +221,7 @@
       </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
+<footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand"><a href="#" class="logo"><span class="logo-icon">📖</span>Know<span>How</span></a><p>Learn real-world skills from expert instructors. Pay per lesson, own forever. Built for Ghanaian graduate students.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a></div></div>
@@ -453,7 +234,33 @@
     </div>
   </footer>
 
-  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<div class="pay-overlay" id="payOverlay" role="dialog" aria-modal="true" aria-label="Payment">
+<div class="pay-modal">
+<button class="pay-close" id="payClose" aria-label="Close">&times;</button>
+<div id="payForm">
+<span class="pay-test-badge">TEST MODE — No real charges</span>
+<h3>Complete Your Purchase</h3>
+<p class="pay-desc">This is a test environment — no real money will be charged.</p>
+<div class="pay-lesson-name"><strong id="payLessonTitle">Lesson</strong><div class="pay-cat" id="payLessonCat">Category</div></div>
+<div class="pay-field"><label for="payName">Full Name</label><input type="text" id="payName" placeholder="e.g. Kwame Asante" required /><div class="field-error">Please enter your name</div></div>
+<div class="pay-field"><label for="payEmail">Email Address</label><input type="email" id="payEmail" placeholder="student@knust.edu.gh" required /><div class="field-error">Please enter a valid email</div></div>
+<div class="pay-total"><span class="pay-label">Total</span><span class="pay-amount" id="payAmount">₵25</span></div>
+<button class="pay-btn" id="payBtn" onclick="processPayment()"><span>Pay with Paystack (Test)</span><div class="spinner"></div></button>
+</div>
+<div id="paySuccess" style="display:none">
+<div class="pay-success">
+<div class="check">✅</div>
+<h4>Payment Successful!</h4>
+<p>Lesson access unlocked. Check your email.</p>
+<div class="pay-ref" id="payRef"></div>
+<button class="buy-btn" style="margin-top:20px" onclick="closePayment()">Close</button>
+</div>
+</div>
+</div>
+</div>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="shared/script.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
   <script type="module">
     import * as THREE from 'three';
     const canvas = document.getElementById('three-canvas');
@@ -579,141 +386,5 @@
     }
     animate();
   </script>
-  <script>
-    const navbar=document.getElementById('navbar'),mobileToggle=document.getElementById('mobileToggle'),navLinks=document.getElementById('navLinks'),scrollProgress=document.getElementById('scrollProgress');
-    window.addEventListener('scroll',()=>{const s=window.scrollY,d=document.body.scrollHeight-window.innerHeight;scrollProgress.style.width=(s/d)*100+'%';navbar.classList.toggle('scrolled',s>60);});
-    mobileToggle.addEventListener('click',()=>navLinks.classList.toggle('open'));
-    document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',()=>navLinks.classList.remove('open')));
-    const revealObserver=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('visible');});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObserver.observe(el));
-    const heroCard=document.getElementById('heroCard');
-    if(heroCard){document.addEventListener('mousemove',e=>{const r=heroCard.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-0.5,y=(e.clientY-r.top)/r.height-0.5;heroCard.style.transform=`perspective(1000px) rotateX(${y*-6}deg) rotateY(${x*6}deg)`;});heroCard.addEventListener('mouseleave',()=>heroCard.style.transform='perspective(1000px) rotateX(0deg) rotateY(0deg)');}
-    const backToTop=document.getElementById('backToTop');
-    window.addEventListener('scroll',()=>backToTop.classList.toggle('visible',window.scrollY>500),{passive:true});
-    backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-    // Typing
-    const hl1=document.querySelector('.hero-text h1 .line-1'),hl2=document.querySelector('.hero-text h1 .line-2');
-    if(hl1&&hl2){const t1=hl1.textContent,t2=hl2.textContent;hl1.textContent='';hl2.textContent='';let ci=0;function tn(){if(ci<t1.length){hl1.textContent+=t1[ci++];setTimeout(tn,35);}else if(ci<t1.length+t2.length){hl2.textContent+=t2[ci++-t1.length];setTimeout(tn,35);}else{const h=document.querySelector('.hero-text');if(h){for(let i=0;i<12;i++){const s=document.createElement('div');s.className='typing-spark';const a=(i/12)*Math.PI*2;s.style.setProperty('--tx',Math.cos(a)*(60+Math.random()*80)+'px');s.style.setProperty('--ty',Math.sin(a)*(60+Math.random()*80)+'px');s.style.animationDelay=(i*0.04)+'s';h.appendChild(s);setTimeout(()=>s.remove(),1500);}}}}setTimeout(tn,500);}
-    // Nav tracking
-    const secs=[];document.querySelectorAll('.nav-links a[href^="#"]').forEach(l=>{const id=l.getAttribute('href').slice(1),el=document.getElementById(id);if(el)secs.push({id,el,link:l});});
-    if(secs.length){const so=new IntersectionObserver(e=>{let mx=0,aid=null;e.forEach(en=>{if(en.intersectionRatio>mx){mx=en.intersectionRatio;aid=en.target.id;}});document.querySelectorAll('.nav-links a').forEach(l=>l.classList.remove('active'));if(aid){const al=document.querySelector(`.nav-links a[href="#${aid}"]`);if(al)al.classList.add('active');}},{threshold:[0,0.15,0.3,0.45,0.6]});secs.forEach(s=>so.observe(s.el));}
-    // Testimonials
-    const tt=document.getElementById('testimonialsTrack'),td=document.getElementById('testimonialDots');
-    if(tt&&td){const cards=tt.querySelectorAll('.testimonial-card');let cs=0,ap;for(let i=0;i<cards.length;i++){const d=document.createElement('button');d.className='testimonial-dot'+(i===0?' active':'');d.addEventListener('click',()=>gis(i));td.appendChild(d);}function gis(i){cs=i;tt.style.transform=`translateX(-${i*100}%)`;td.querySelectorAll('.testimonial-dot').forEach((d,j)=>d.classList.toggle('active',j===i));ra();}function ra(){clearInterval(ap);ap=setInterval(()=>gis((cs+1)%cards.length),5000);}const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting)ra();else clearInterval(ap);},{threshold:0.2});obs.observe(document.querySelector('.testimonials-section'));}
-    // Stats counter
-    const hs=document.querySelectorAll('.hero-stat-num'),sv=['200+','50+','12K'];let sa=false;
-    const sso=new IntersectionObserver(e=>{if(e[0].isIntersecting&&!sa){sa=true;hs.forEach((el,i)=>{const t=sv[i],np=parseInt(t),sfx=t.replace(np,''),dur=1500,st=performance.now();function ac(n){const el2=n-st,p=Math.min(el2/dur,1),e2=1-Math.pow(1-p,3);el.textContent=Math.floor(e2*np)+sfx;if(p<1)requestAnimationFrame(ac);else el.textContent=t;}requestAnimationFrame(ac);});}},{threshold:0.5});
-    if(hs.length)sso.observe(hs[0].closest('.hero-stats'));
-  </script>
-
-<div class="pay-overlay" id="payOverlay">
-  <div class="pay-modal">
-    <button class="pay-close" id="payClose">&times;</button>
-    <div id="payForm">
-      <span class="pay-test-badge">TEST MODE — No real charges</span>
-      <h3>Complete Your Purchase</h3>
-      <p class="pay-desc">You are about to purchase this lesson. This is a test environment — no real money will be charged.</p>
-      <div class="pay-lesson-name">
-        <strong id="payLessonTitle">Lesson Title</strong>
-        <div class="pay-cat" id="payLessonCat">Category</div>
-      </div>
-      <div class="pay-field">
-        <label for="payName">Full Name</label>
-        <input type="text" id="payName" placeholder="e.g. Kwame Asante" required />
-      </div>
-      <div class="pay-field">
-        <label for="payEmail">Email Address</label>
-        <input type="email" id="payEmail" placeholder="student@knust.edu.gh" required />
-      </div>
-      <div class="pay-total">
-        <span class="pay-label">Total</span>
-        <span class="pay-amount" id="payAmount">₵25</span>
-      </div>
-      <button class="pay-btn" id="payBtn" onclick="processPayment()">
-        <span>Pay with Paystack (Test)</span>
-      </button>
-    </div>
-    <div id="paySuccess" style="display:none">
-      <div class="pay-success">
-        <div class="check">✅</div>
-        <h4>Payment Successful!</h4>
-        <p>Your lesson access has been unlocked. Check your email for the download link.</p>
-        <p style="margin-top:16px"><small style="color:var(--text-dim)">Reference: <span id="payRef">—</span></small></p>
-        <button class="pay-btn" style="margin-top:20px" onclick="closePayment()">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script>
-const PAYSTACK_KEY = 'pk_test_9c5a2052e795fb4da811786934420184a4f7b255';
-let currentLesson = { title: '', category: '', price: 0, priceCedis: 0 };
-
-function openPayment(title, category, priceCedis) {
-  currentLesson = { title, category, priceCedis, price: priceCedis * 100 };
-  document.getElementById('payLessonTitle').textContent = title;
-  document.getElementById('payLessonCat').textContent = category;
-  document.getElementById('payAmount').textContent = '\u20b5' + priceCedis;
-  document.getElementById('payForm').style.display = 'block';
-  document.getElementById('paySuccess').style.display = 'none';
-  document.getElementById('payOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closePayment() {
-  document.getElementById('payOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('payClose').addEventListener('click', closePayment);
-document.getElementById('payOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closePayment();
-});
-
-function processPayment() {
-  const name = document.getElementById('payName').value.trim();
-  const email = document.getElementById('payEmail').value.trim();
-  if (!name || !email) { alert('Please fill in your name and email.'); return; }
-  const btn = document.getElementById('payBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span>Opening Paystack...</span>';
-  try {
-    const handler = PaystackPop.setup({
-      key: PAYSTACK_KEY,
-      email: email,
-      amount: currentLesson.price,
-      currency: 'GHS',
-      ref: 'KNW-' + Date.now() + '-' + Math.random().toString(36).slice(2,7),
-      metadata: {
-        custom_fields: [
-          { display_name: 'Name', variable_name: 'name', value: name },
-          { display_name: 'Lesson', variable_name: 'lesson', value: currentLesson.title },
-          { display_name: 'Category', variable_name: 'category', value: currentLesson.category }
-        ]
-      },
-      callback: function(response) {
-        document.getElementById('payForm').style.display = 'none';
-        document.getElementById('paySuccess').style.display = 'block';
-        document.getElementById('payRef').textContent = response.reference;
-        btn.disabled = false;
-        btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
-      },
-      onClose: function() {
-        btn.disabled = false;
-        btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
-      }
-    });
-    handler.openIframe();
-  } catch(e) {
-    console.error('Paystack error:', e);
-    btn.disabled = false;
-    btn.innerHTML = '<span>Pay with Paystack (Test)</span>';
-    alert('Payment error. Please try again.');
-  }
-}
-</script>
-
 </body>
 </html>
