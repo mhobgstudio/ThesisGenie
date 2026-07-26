@@ -36,6 +36,37 @@
 .pay-success h4{font-size:1.2rem;margin-bottom:8px}
 .pay-success p{color:var(--text-dim);font-size:0.9rem}
 
+
+/* PAYWALL */
+.paywall-overlay{position:relative;min-height:200px}
+.paywall-blur{filter:blur(6px);pointer-events:none;user-select:none;max-height:300px;overflow:hidden;position:relative}
+.paywall-blur::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,var(--space-dark,#0A0A14) 90%)}
+.paywall-box{position:absolute;bottom:0;left:0;right:0;text-align:center;padding:60px 20px 30px;background:linear-gradient(transparent,var(--space-dark,#0A0A14) 30%);z-index:5}
+.paywall-box h3{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;margin-bottom:8px}
+.paywall-box p{color:var(--text-dim);font-size:0.9rem;margin-bottom:20px}
+.paywall-box .buy-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.9rem;border:none;cursor:pointer;transition:all 0.6s cubic-bezier(0.22,1,0.36,1);font-family:'Inter',sans-serif;text-decoration:none;background:linear-gradient(135deg,var(--gold),#C49A35);color:var(--space-dark);box-shadow:0 4px 24px rgba(212,168,67,0.25)}
+.paywall-box .buy-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,67,0.4)}
+.lesson-content.unlocked .paywall-overlay{display:none}
+.lesson-content.unlocked .paywall-blur{filter:none;pointer-events:auto;user-select:auto;max-height:none}
+.lesson-content.unlocked .paywall-blur::after{display:none}
+
+/* VIDEO EMBED */
+.lesson-video{margin:32px 0;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--glass-border);background:rgba(0,0,0,0.3)}
+.lesson-video .vid-label{padding:12px 20px;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);background:rgba(212,168,67,0.04)}
+.lesson-video iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+.lesson-video .vid-fallback{padding:16px 20px;display:flex;align-items:center;gap:12px;background:rgba(0,0,0,0.2)}
+.lesson-video .vid-fallback a{color:var(--gold-light);text-decoration:none;font-size:0.85rem}
+.lesson-video .vid-fallback a:hover{text-decoration:underline}
+.lesson-video .vid-fallback span{color:var(--text-dim);font-size:0.78rem}
+
+/* CODE COPY BOX */
+.code-block{position:relative;margin:16px 0}
+.code-block pre{background:rgba(0,0,0,0.4);border:1px solid rgba(212,168,67,0.1);border-radius:var(--radius-md);padding:20px;padding-top:40px;overflow-x:auto;margin:0}
+.code-block pre code{background:none;border:none;padding:0;color:var(--text);font-size:0.85rem}
+.copy-btn{position:absolute;top:8px;right:8px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);color:var(--gold-light);padding:4px 12px;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-family:'Inter',sans-serif}
+.copy-btn:hover{background:rgba(212,168,67,0.2);border-color:rgba(212,168,67,0.3)}
+.copy-btn.copied{background:rgba(46,204,113,0.15);border-color:rgba(46,204,113,0.3);color:#2ecc71}
+
 </style>
 </head>
 <body>
@@ -235,6 +266,57 @@ function processPayment() {
     alert('Payment error. Please try again.');
   }
 }
+</script>
+
+
+<script>
+// Code copy boxes
+document.querySelectorAll('.code-block pre').forEach(pre => {
+  const btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', function() {
+    const code = pre.querySelector('code') || pre;
+    navigator.clipboard.writeText(code.textContent).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+  pre.parentElement.insertBefore(btn, pre);
+});
+
+// Paywall unlock on payment success
+const origCallback = window._paystackSuccessCallback;
+window._paystackSuccessCallback = function(response) {
+  document.querySelectorAll('.paywall-blur').forEach(el => {
+    el.classList.remove('paywall-blur');
+    el.style.filter = 'none';
+    el.style.pointerEvents = 'auto';
+    el.style.userSelect = 'auto';
+    el.style.maxHeight = 'none';
+  });
+  document.querySelectorAll('.paywall-box').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.paywall-overlay').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.lesson-content').forEach(el => el.classList.add('unlocked'));
+  // Store unlock in sessionStorage
+  sessionStorage.setItem('knowhow_unlocked_' + window.location.pathname, 'true');
+};
+
+// Check if already unlocked this session
+window.addEventListener('DOMContentLoaded', function() {
+  if (sessionStorage.getItem('knowhow_unlocked_' + window.location.pathname)) {
+    document.querySelectorAll('.paywall-blur').forEach(el => {
+      el.style.filter = 'none';
+      el.style.pointerEvents = 'auto';
+      el.style.userSelect = 'auto';
+      el.style.maxHeight = 'none';
+    });
+    document.querySelectorAll('.paywall-box').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.paywall-overlay').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.lesson-content').forEach(el => el.classList.add('unlocked'));
+  }
+});
 </script>
 
 </body></html>
