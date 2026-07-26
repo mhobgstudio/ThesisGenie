@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AI Code Editors: VS Code, Cursor, Windsurf & OpenCode — KnowHow</title>
+<meta name="description" content="Compare and set up the best AI-powered code editors for graduate students and developers."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--gold:#D4A843;--gold-light:#F0D68A;--gold-glow:rgba(212,168,67,0.3);--space-dark:#0A0A14;--glass:rgba(255,255,255,0.08);--glass-border:rgba(212,168,67,0.25);--text:#FFF8F0;--text-muted:rgba(255,248,240,0.95);--text-dim:rgba(255,248,240,0.78);--radius:20px;--radius-md:14px;--transition:all 0.6s cubic-bezier(0.22,1,0.36,1)}html{scroll-behavior:smooth}body{font-family:"Inter",sans-serif;color:var(--text);background:var(--space-dark);line-height:1.7;overflow-x:hidden}::selection{background:var(--gold);color:var(--space-dark)}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--space-dark)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}.navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 0;transition:var(--transition)}.navbar.scrolled{background:rgba(10,10,20,0.85);backdrop-filter:blur(30px);padding:10px 0;border-bottom:1px solid rgba(212,168,67,0.06)}.navbar .container{max-width:1200px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between}.logo{font-family:"Space Grotesk",sans-serif;font-size:1.35rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:10px;text-decoration:none}.logo-icon{width:34px;height:34px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);background:rgba(212,168,67,0.06)}.logo span{color:var(--gold)}.nav-links{display:flex;align-items:center;gap:28px;list-style:none}.nav-links a{color:var(--text-muted);font-size:0.85rem;font-weight:500;text-decoration:none;transition:var(--transition)}.nav-links a:hover{color:var(--gold)}.mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--text);font-size:24px}.container{max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:10}.breadcrumb{position:relative;z-index:10;padding:100px 0 20px;max-width:1200px;margin:0 auto;padding-left:28px;padding-right:28px}.breadcrumb a{color:var(--gold);text-decoration:none;font-size:0.85rem}.breadcrumb span{color:var(--text-dim);font-size:0.85rem;margin:0 8px}.lesson-header{position:relative;z-index:10;padding:0 0 60px;max-width:800px;margin:0 auto;padding-left:28px;padding-right:28px}.lesson-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,0.06);border:1px solid rgba(212,168,67,0.1);padding:5px 18px;border-radius:50px;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--gold-light);margin-bottom:20px}.lesson-header h1{font-family:"Space Grotesk",sans-serif;font-size:2.8rem;font-weight:700;color:var(--text);margin-bottom:16px;letter-spacing:-1px}.lesson-header p{color:var(--text-muted);font-size:1.05rem;line-height:1.8;margin-bottom:24px}.lesson-meta-bar{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:24px}.meta-item{display:flex;align-items:center;gap:6px;color:var(--text-dim);font-size:0.85rem}.meta-item strong{color:var(--gold-light)}.buy-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.9rem;border:none;cursor:pointer;transition:var(--transition);font-family:"Inter",sans-serif;text-decoration:none;background:linear-gradient(135deg,var(--gold),#C49A35);color:var(--space-dark);box-shadow:0 4px 24px rgba(212,168,67,0.25)}.buy-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,67,0.4)}.lesson-content{position:relative;z-index:10;max-width:800px;margin:0 auto;padding:0 28px 80px}.lesson-content h2{font-family:"Space Grotesk",sans-serif;font-size:1.8rem;font-weight:700;color:var(--text);margin:48px 0 16px}.lesson-content h3{font-size:1.2rem;font-weight:600;color:var(--text);margin:32px 0 12px}.lesson-content p{color:var(--text-muted);margin-bottom:16px;line-height:1.8}.lesson-content ol,.lesson-content ul{color:var(--text-muted);margin-bottom:16px;padding-left:24px}.lesson-content li{margin-bottom:8px;line-height:1.7}.lesson-content code{background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.15);padding:2px 8px;border-radius:6px;font-size:0.88rem;color:var(--gold-light)}.lesson-content pre{background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,67,0.1);border-radius:var(--radius-md);padding:20px;margin:16px 0;overflow-x:auto}.lesson-content pre code{background:none;border:none;padding:0;color:var(--text);font-size:0.85rem}.tip-box{background:rgba(212,168,67,0.04);border:1px solid rgba(212,168,67,0.15);border-left:3px solid var(--gold);border-radius:var(--radius-md);padding:20px 24px;margin:24px 0}.tip-box strong{color:var(--gold-light)}.related-section{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:0 28px 80px}.related-section h2{font-family:"Space Grotesk",sans-serif;font-size:1.8rem;text-align:center;margin-bottom:32px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.related-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:24px;text-decoration:none;transition:var(--transition)}.related-card:hover{border-color:rgba(212,168,67,0.2);transform:translateY(-4px)}.related-card .rcat{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:8px}.related-card h4{font-size:1rem;color:var(--text);margin-bottom:8px}.related-card p{font-size:0.82rem;color:var(--text-dim);margin-bottom:12px}.related-card .rprice{font-family:"Space Grotesk",sans-serif;font-weight:700;color:var(--gold)}.footer{padding:70px 0 30px;color:var(--text-dim);border-top:1px solid rgba(212,168,67,0.04)}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}.footer-brand p{font-size:0.88rem;margin-bottom:20px;max-width:320px;line-height:1.8}.footer h4{color:var(--text);font-size:0.85rem;margin-bottom:20px;text-transform:uppercase;letter-spacing:1.5px}.footer-links{list-style:none}.footer-links li{margin-bottom:10px}.footer-links a{font-size:0.88rem;color:var(--text-dim);text-decoration:none}.footer-links a:hover{color:var(--gold)}.footer-bottom{border-top:1px solid rgba(255,255,255,0.03);padding-top:24px;display:flex;justify-content:space-between;font-size:0.8rem;flex-wrap:wrap;gap:12px}@media(max-width:1024px){.related-grid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}}@media(max-width:768px){.nav-links{display:none}.mobile-toggle{display:block}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(10,10,20,0.95);backdrop-filter:blur(30px);padding:24px;gap:20px;align-items:center}.related-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.lesson-header h1{font-size:1.8rem}.lesson-meta-bar{flex-direction:column;gap:8px}}</style>
+</head>
+<body>
+<nav class="navbar" id="navbar"><div class="container"><a href="../index.html" class="logo"><span class="logo-icon">🎓</span>Know<span>How</span></a><button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><ul class="nav-links" id="navLinks"><li><a href="../index.html">Home</a></li><li><a href="../index.html#categories">Categories</a></li><li><a href="../index.html#lessons">Lessons</a></li><li><a href="../index.html#pricing">Pricing</a></li></ul></div></nav>
+
+<div class="breadcrumb"><a href="../index.html">Home</a> <span>›</span> <a href="../index.html#categories">Developer Tools</a> <span>›</span> AI Code Editors: VS Code, Cursor, Windsurf & OpenCode</div>
+
+<section class="lesson-header">
+<div class="lesson-tag">Developer Tools</div>
+<h1>AI Code Editors: VS Code, Cursor, Windsurf & OpenCode</h1>
+<p>Compare and set up the best AI-powered code editors for graduate students and developers.</p>
+<div class="lesson-meta-bar">
+<div class="meta-item">⏱️ <strong>30 min</strong></div>
+<div class="meta-item">📊 <strong>Intermediate</strong></div>
+<div class="meta-item">💰 <strong>₵25</strong></div>
+</div>
+<a href="#" class="buy-btn"><span>Buy This Lesson — ₵25</span></a>
+</section>
+
+<section class="lesson-content">
+<h2>Overview: Which Editor Should You Use?</h2>
+<p>Modern code editors come with AI built in. Here's a quick comparison to help you choose:</p>
+
+<h2>VS Code (Free)</h2>
+<p>The most popular code editor. Free, open-source, and extensible with thousands of plugins.</p>
+<h3>Key Features</h3>
+<ul>
+<li>Massive extension marketplace</li>
+<li>Integrated terminal</li>
+<li>Git integration</li>
+<li>GitHub Copilot support (with Student Pack)</li>
+<li>Live Share for collaboration</li>
+</ul>
+<h3>Best For</h3>
+<p>General-purpose coding, web development, data science, anyone who wants maximum flexibility.</p>
+
+<h2>Cursor (AI-Native)</h2>
+<p>A fork of VS Code with AI deeply integrated into every aspect of the editor.</p>
+<h3>Key Features</h3>
+<ul>
+<li>AI code generation and editing built-in</li>
+<li>Chat with your codebase</li>
+<li>Multi-file editing with AI</li>
+<li>Uses Claude, GPT-4, and other models</li>
+</ul>
+<h3>Best For</h3>
+<p>Developers who want AI-first experience. Free tier available with limited AI usage.</p>
+
+<h2>Windsurf (AI-Powered)</h2>
+<p>Another AI-native editor with strong code understanding capabilities.</p>
+<h3>Key Features</h3>
+<ul>
+<li>Deep codebase awareness</li>
+<li>AI-powered debugging</li>
+<li>Automatic code suggestions</li>
+</ul>
+<h3>Best For</h3>
+<p>Developers working on large codebases who want AI to understand their full project context.</p>
+
+<h2>OpenCode (Terminal-Based)</h2>
+<p>A terminal-based AI coding assistant — no GUI needed.</p>
+<h3>Installation</h3>
+<pre><code>npm i -g opencode-ai
+mkdir TerminalProjects
+cd TerminalProjects
+opencode</code></pre>
+<h3>Best For</h3>
+<p>Developers who prefer working in the terminal, SSH workflows, or lightweight setups.</p>
+
+<div class="tip-box"><strong>💡 Tip:</strong> Start with VS Code + GitHub Copilot (free with Student Pack). Graduate to Cursor or Windsurf once you're comfortable with AI-assisted coding.</div>
+
+<h2>Recommended Setup for KNUST Students</h2>
+<ol>
+<li>Install <strong>VS Code</strong> from <code>code.visualstudio.com</code></li>
+<li>Get <strong>GitHub Copilot</strong> free with the Student Developer Pack</li>
+<li>Install the <strong>Python extension</strong> for data science work</li>
+<li>Install the <strong>LaTeX Workshop</strong> extension for academic papers</li>
+<li>Add <strong>GitLens</strong> for better version control</li>
+</ol>
+</section>
+
+<section class="related-section">
+<h2>Related Lessons</h2>
+<div class="related-grid">
+<a href="terminal-ai.html" class="related-card"><div class="rcat">Developer Tools</div><h4>Terminal AI: Copilot, Gemini & Kimi</h4><p>AI from your terminal</p><div class="rprice">₵20</div></a><a href="github-student-pack.html" class="related-card"><div class="rcat">Developer Tools</div><h4>GitHub Student Developer Pack</h4><p>Free tools for students</p><div class="rprice">₵15</div></a><a href="build-website.html" class="related-card"><div class="rcat">Creative</div><h4>Build Your Dream Website Without Coding</h4><p>Create websites no-code</p><div class="rprice">₵20</div></a>
+</div>
+</section>
+
+<footer class="footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand"><a href="../index.html" class="logo"><span class="logo-icon">🎓</span>Know<span>How</span></a><p>Learn real-world skills. Pay per lesson, own forever.</p></div>
+<div><h4>Categories</h4><ul class="footer-links"><li><a href="../index.html#categories">KNUST Tools</a></li><li><a href="../index.html#categories">AI Research</a></li><li><a href="../index.html#categories">AI Writing</a></li><li><a href="../index.html#categories">Developer Tools</a></li></ul></div>
+<div><h4>Company</h4><ul class="footer-links"><li><a href="../index.html#how">How It Works</a></li><li><a href="../index.html#pricing">Pricing</a></li><li><a href="../index.html#contact">Contact</a></li></ul></div>
+<div><h4>Contact</h4><ul class="footer-links"><li><a href="mailto:hello@knowhow.com">hello@knowhow.com</a></li></ul></div>
+</div>
+<div class="footer-bottom"><span>© 2026 KnowHow</span><span>Learn anything. Own everything.</span></div>
+</div></footer>
+<script>
+window.addEventListener("scroll",()=>{document.getElementById("navbar").classList.toggle("scrolled",window.scrollY>60);});
+document.getElementById("mobileToggle").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+</script>
+</body></html>
